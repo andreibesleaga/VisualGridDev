@@ -1,4 +1,4 @@
-# VisualGridDev: Universal AI Agent Orchestration Platform
+# VisualGridDev: Universal Visual Language Programming (including AI agentic orchestration and grid mesh systems deployments)
 
 **Version:** 5.0 (Draft)
 **Date:** 2025-08-01
