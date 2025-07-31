@@ -1,0 +1,34 @@
+@startuml
+title Backup and Recovery Architecture
+
+package "Primary Site" {
+    component "Primary Cluster" as Primary
+    component "Primary Database" as PrimaryDB
+    component "Application Data" as AppData
+}
+
+package "Backup Systems" {
+    component "Backup Controller" as BackupCtrl
+    component "Snapshot Service" as Snapshot
+    component "Backup Storage" as BackupStorage
+}
+
+package "Secondary Site" {
+    component "DR Cluster" as DRCluster
+    component "DR Database" as DRDB
+    component "Recovery Service" as Recovery
+}
+
+Primary -> BackupCtrl: Trigger backup
+BackupCtrl -> Snapshot: Create snapshots
+Snapshot -> BackupStorage: Store backups
+PrimaryDB -> BackupStorage: Database backups
+AppData -> BackupStorage: Application backups
+
+' Disaster recovery flow
+BackupStorage -> Recovery: Restore data
+Recovery -> DRCluster: Deploy services
+Recovery -> DRDB: Restore database
+DRCluster -> DRCluster: Validate recovery
+
+@enduml

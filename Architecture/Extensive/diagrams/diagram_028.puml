@@ -1,0 +1,20 @@
+@startuml
+title Edge Deployment State Machine
+
+[*] -> Provisioning : Deploy command
+Provisioning -> Downloading : Download runtime
+Downloading -> Installing : Install complete
+Installing -> Configuring : Installation done
+Configuring -> Connecting : Configuration set
+Connecting -> Syncing : Connected to mesh
+Syncing -> Operational : Sync complete
+Operational -> Updating : Update available
+Updating -> Operational : Update complete
+Operational -> Offline : Network lost
+Offline -> Connecting : Network restored
+Operational -> Maintenance : Maintenance mode
+Maintenance -> Operational : Maintenance done
+Operational -> Decommissioning : Shutdown command
+Decommissioning -> [*] : Cleanup complete
+
+@enduml

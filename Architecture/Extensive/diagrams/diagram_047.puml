@@ -1,0 +1,36 @@
+@startuml
+title Real-time Data Processing Pipeline
+
+!define QUEUE queue
+!define PROCESSOR component
+!define STORAGE database
+
+QUEUE "Sensor Data\nQueue" as SensorQ
+QUEUE "Event Stream\nQueue" as EventQ
+QUEUE "ML Pipeline\nQueue" as MLQ
+
+PROCESSOR "Data Ingestion\nService" as Ingestion
+PROCESSOR "Stream Processor\n(Apache Flink)" as StreamProc
+PROCESSOR "ML Inference\nEngine" as MLEngine
+PROCESSOR "Alert Manager" as AlertMgr
+
+STORAGE "Time Series DB\n(InfluxDB)" as TimeSeriesDB
+STORAGE "Vector Database\n(Pinecone)" as VectorDB
+STORAGE "Data Lake\n(Delta Lake)" as DataLake
+
+SensorQ -> Ingestion: Raw sensor data
+Ingestion -> EventQ: Normalized events
+EventQ -> StreamProc: Real-time processing
+StreamProc -> TimeSeriesDB: Store metrics
+StreamProc -> MLQ: ML processing queue
+MLQ -> MLEngine: Run inference
+MLEngine -> VectorDB: Store embeddings
+MLEngine -> AlertMgr: Anomaly alerts
+StreamProc -> DataLake: Historical data
+DataLake -> MLEngine: Training data
+
+note right of StreamProc : Windowing, aggregation,\ncomplex event processing
+note right of MLEngine : Real-time inference,\nanomalies detection
+note right of DataLake : Batch processing,\nhistorical analysis
+
+@enduml

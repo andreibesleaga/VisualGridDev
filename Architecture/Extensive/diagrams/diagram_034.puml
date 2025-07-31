@@ -1,0 +1,35 @@
+@startuml
+title Health Check Architecture
+
+package "Health Monitoring System" {
+    component "Health Aggregator" as Aggregator
+    component "Alert Manager" as AlertMgr
+    component "Dashboard" as Dashboard
+    component "Notification Service" as Notify
+}
+
+package "System Components" {
+    component "Agent Health" as AgentHealth
+    component "Flow Health" as FlowHealth
+    component "Database Health" as DBHealth
+    component "Network Health" as NetHealth
+}
+
+package "External Monitoring" {
+    component "Prometheus" as Prometheus
+    component "Grafana" as Grafana
+    component "PagerDuty" as PagerDuty
+}
+
+AgentHealth -> Aggregator: Health status
+FlowHealth -> Aggregator: Flow metrics
+DBHealth -> Aggregator: DB metrics
+NetHealth -> Aggregator: Network status
+Aggregator -> AlertMgr: Health summary
+AlertMgr -> Dashboard: Display status
+AlertMgr -> Notify: Send alerts
+Aggregator -> Prometheus: Export metrics
+Prometheus -> Grafana: Visualize data
+Notify -> PagerDuty: Critical alerts
+
+@enduml

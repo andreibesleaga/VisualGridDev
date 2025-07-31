@@ -1,0 +1,30 @@
+@startuml
+title Edge-to-Cloud Synchronization Pattern
+
+participant "Edge Device" as Edge
+participant "Mesh Network" as Mesh
+participant "Cloud Gateway" as Gateway
+participant "Cloud Storage" as Storage
+participant "ML Pipeline" as ML
+
+== Online Synchronization ==
+Edge -> Mesh: Send buffered data
+Mesh -> Gateway: Route to cloud
+Gateway -> Storage: Store data
+Storage -> ML: Trigger processing
+ML -> Gateway: Model updates
+Gateway -> Mesh: Distribute updates
+Mesh -> Edge: Receive updates
+
+== Offline Operation ==
+Edge -> Edge: Buffer data locally
+Edge -> Edge: Run local inference
+Edge -> Edge: Store results
+
+== Reconnection ==
+Edge -> Mesh: Reconnect to mesh
+Edge -> Mesh: Sync buffered data
+Mesh -> Edge: Download updates
+Edge -> Edge: Apply updates
+
+@enduml

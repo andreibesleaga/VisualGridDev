@@ -1,0 +1,24 @@
+@startuml
+title Data Encryption Flow
+
+participant "Client Agent" as Client
+participant "Encryption Service" as Encrypt
+participant "Key Management" as KeyMgmt
+participant "Transport Layer" as Transport
+participant "Server Agent" as Server
+
+Client -> KeyMgmt: Request encryption key
+KeyMgmt -> KeyMgmt: Generate/retrieve key
+KeyMgmt -> Client: Return key
+Client -> Encrypt: Encrypt data
+Encrypt -> Client: Encrypted payload
+Client -> Transport: Send encrypted data
+Transport -> Transport: mTLS encryption
+Transport -> Server: Deliver data
+Server -> KeyMgmt: Request decryption key
+KeyMgmt -> Server: Return key
+Server -> Encrypt: Decrypt data
+Encrypt -> Server: Decrypted payload
+Server -> Server: Process data
+
+@enduml

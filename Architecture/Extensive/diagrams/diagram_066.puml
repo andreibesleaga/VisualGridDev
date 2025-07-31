@@ -1,0 +1,70 @@
+@startuml
+!theme plain
+skinparam backgroundColor #f0f8ff
+
+title VisualGridDev Studio - Scalability Architecture View
+
+rectangle "Load Balancing Tier" as loadbalancer {
+  rectangle "Global Load\nBalancer" as glb
+  rectangle "Regional Load\nBalancer" as rlb
+  rectangle "Service Mesh\nLoad Balancer" as smlb
+}
+
+rectangle "Auto-Scaling Groups" as autoscaling {
+  rectangle "Web UI Pods\n(HPA: 2-20)" as webpods
+  rectangle "API Gateway\n(HPA: 3-50)" as apipods
+  rectangle "Agent Runtime\n(HPA: 5-100)" as agentpods
+  rectangle "ML Services\n(HPA: 2-200)" as mlpods
+}
+
+rectangle "Data Scaling" as datascaling {
+  rectangle "Kafka Cluster\n(9 brokers)" as kafka
+  rectangle "Database\nSharding" as sharding
+  rectangle "Cache Layer\n(Redis Cluster)" as cache
+  rectangle "CDN\n(CloudFlare)" as cdn
+}
+
+rectangle "Compute Scaling" as compute {
+  rectangle "Kubernetes\nNode Pools" as nodepools
+  rectangle "Spot Instances\n(Cost Optimization)" as spot
+  rectangle "GPU Nodes\n(ML Workloads)" as gpu
+  rectangle "Edge Nodes\n(IoT Processing)" as edge
+}
+
+rectangle "Geographic Distribution" as geo {
+  rectangle "US-East\n(Primary)" as useast
+  rectangle "US-West\n(Secondary)" as uswest
+  rectangle "EU-Central\n(GDPR)" as eu
+  rectangle "Asia-Pacific\n(Low Latency)" as apac
+}
+
+loadbalancer --> autoscaling : distribute traffic
+autoscaling --> datascaling : data operations
+datascaling --> compute : resource allocation
+compute --> geo : regional deployment
+
+note right of glb : DNS-based routing\nHealth checks
+note right of webpods : React app\nStateless scaling
+note right of agentpods : A2A agents\nHorizontal scaling
+note right of kafka : 1M+ msg/sec\nPartitioned topics
+note right of nodepools : Auto-provisioning\nMulti-zone deployment
+
+rectangle "Scaling Metrics" as metrics {
+  rectangle "📊 CPU: 70% threshold" as cpu
+  rectangle "📈 Memory: 80% threshold" as memory
+  rectangle "🔄 Queue Depth: 1000 msgs" as queue
+  rectangle "⚡ Response Time: 100ms" as response
+  rectangle "👥 Concurrent Users: 10K" as users_metric
+}
+
+rectangle "Scaling Actions" as actions {
+  rectangle "🔄 Horizontal Pod Autoscaler" as hpa
+  rectangle "📈 Vertical Pod Autoscaler" as vpa
+  rectangle "🌐 Cluster Autoscaler" as ca
+  rectangle "⚡ Custom Metrics Scaler" as custom
+}
+
+metrics --> actions : trigger scaling
+actions --> autoscaling : scale resources
+
+@enduml

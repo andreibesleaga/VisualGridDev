@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+skinparam backgroundColor #f5f5f5
+
+title VisualGridDev Studio - Deployment Flow Visualization
+
+rectangle "Development" as dev {
+  rectangle "👨‍💻 Developer\nWorkstation" as developer
+  rectangle "🔧 Local Testing\n& Validation" as testing
+  rectangle "📝 Git Repository\n(Source Code)" as git
+}
+
+rectangle "CI/CD Pipeline" as cicd {
+  rectangle "🏗️ Build Process\n(Docker Images)" as build
+  rectangle "🧪 Automated Tests\n(Unit/Integration)" as tests
+  rectangle "📦 Artifact Registry\n(Container Images)" as registry
+  rectangle "🚀 Deployment\nOrchestrator" as deploy
+}
+
+rectangle "Staging Environment" as staging {
+  rectangle "🎭 Staging Cluster\n(K8s)" as stagingk8s
+  rectangle "🔍 Performance Tests\n& Validation" as perftest
+  rectangle "✅ Approval Gate\n(Manual/Auto)" as approval
+}
+
+rectangle "Production Environment" as production {
+  rectangle "🌐 Production Cluster\n(Multi-Region)" as prodk8s
+  rectangle "📊 Monitoring\n& Observability" as monitoring
+  rectangle "🔄 Auto-scaling\n& Self-healing" as autoscaling
+}
+
+developer -> testing: code changes
+testing -> git: commit & push
+git -> build: trigger build
+build -> tests: run tests
+tests -> registry: push images
+registry -> deploy: deploy to staging
+deploy -> stagingk8s: kubernetes deploy
+stagingk8s -> perftest: run tests
+perftest -> approval: validation results
+approval -> prodk8s: promote to production
+prodk8s -> monitoring: health checks
+monitoring -> autoscaling: metrics & alerts
+
+note right of build : Multi-stage builds\nSecurity scanning
+note right of tests : Unit, integration,\nend-to-end tests
+note right of stagingk8s : Blue-green deployment\nCanary releases
+note right of prodk8s : Rolling updates\nZero-downtime deployment
+
+@enduml

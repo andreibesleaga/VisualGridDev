@@ -1,0 +1,33 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Self-Healing System - Component Architecture
+
+Container_Boundary(healing, "Self-Healing Layer") {
+    Component(monitor, "System Monitor", "Rust", "Collects metrics from all components")
+    Component(analyzer, "Anomaly Analyzer", "Python/ML", "Detects system anomalies using ML")
+    Component(planner, "Recovery Planner", "Python", "Plans remediation actions")
+    Component(executor, "Action Executor", "Go", "Executes recovery actions")
+    Component(knowledge, "Knowledge Base", "Python", "Learns from past incidents")
+    
+    Component(fitness, "Fitness Evaluator", "Python", "Evaluates system health metrics")
+    Component(evolution, "Evolution Controller", "Python", "Triggers system improvements")
+    Component(canary, "Canary Deployer", "Go", "Manages canary deployments")
+}
+
+Container_Ext(kafka, "Apache Kafka", "Event streaming")
+Container_Ext(prometheus, "Prometheus", "Metrics collection")
+Container_Ext(k8s, "Kubernetes", "Container orchestration")
+
+Rel(monitor, prometheus, "Collects metrics")
+Rel(monitor, kafka, "Health events")
+Rel(analyzer, monitor, "Analyzes data")
+Rel(planner, analyzer, "Plans recovery")
+Rel(executor, planner, "Executes actions")
+Rel(knowledge, analyzer, "Updates models")
+Rel(fitness, monitor, "Evaluates fitness")
+Rel(evolution, fitness, "Triggers evolution")
+Rel(canary, k8s, "Deploys changes")
+Rel(executor, k8s, "Scaling actions")
+
+@enduml

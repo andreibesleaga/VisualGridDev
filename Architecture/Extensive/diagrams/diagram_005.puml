@@ -1,0 +1,22 @@
+@startuml
+title Node Lifecycle States
+
+[*] -> Created : User creates node
+Created -> Validating : Validate configuration
+Validating -> Invalid : Validation fails
+Invalid -> Created : Fix configuration
+Validating -> Deploying : Validation passes
+Deploying -> Running : Deployment successful
+Deploying -> Failed : Deployment fails
+Failed -> Deploying : Retry deployment
+Running -> Updating : Configuration change
+Updating -> Running : Update successful
+Updating -> Failed : Update fails
+Running -> Stopping : User stops node
+Stopping -> Stopped : Stop successful
+Stopped -> Deploying : Restart node
+Running -> Failed : Runtime error
+Failed -> Running : Auto-recovery
+Failed -> [*] : Permanent failure
+
+@enduml

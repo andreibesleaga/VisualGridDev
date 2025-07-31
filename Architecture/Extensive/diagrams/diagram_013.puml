@@ -1,0 +1,31 @@
+@startuml
+title Edge Device Use Cases
+
+left to right direction
+
+actor "IoT Sensor" as Sensor
+actor "Edge Operator" as Operator
+actor "Cloud System" as Cloud
+
+package "Edge Device" {
+    usecase "Collect Sensor Data" as CollectData
+    usecase "Process Data Locally" as ProcessLocal
+    usecase "Run AI Inference" as RunAI
+    usecase "Store Data" as StoreData
+    usecase "Sync with Cloud" as SyncCloud
+    usecase "Handle Offline Mode" as OfflineMode
+    usecase "Self-Heal" as SelfHeal
+    usecase "Update Models" as UpdateModels
+}
+
+Sensor --> CollectData
+CollectData --> ProcessLocal
+ProcessLocal --> RunAI
+RunAI --> StoreData
+StoreData --> SyncCloud
+Cloud --> SyncCloud
+Cloud --> UpdateModels
+Operator --> OfflineMode
+Operator --> SelfHeal
+
+@enduml

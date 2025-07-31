@@ -1,0 +1,34 @@
+@startuml
+title End-to-End Testing Architecture
+
+package "Test Environment" {
+    component "Test Runner" as TestRunner
+    component "Test Data Manager" as TestData
+    component "Mock Services" as Mocks
+}
+
+package "System Under Test" {
+    component "VisualGridDev Studio" as Studio
+    component "Agent Network" as Agents
+    component "Database" as DB
+}
+
+package "Validation" {
+    component "Result Validator" as Validator
+    component "Performance Monitor" as PerfMon
+    component "Report Generator" as Reporter
+}
+
+TestRunner -> TestData: Setup test data
+TestData -> DB: Initialize database
+TestRunner -> Mocks: Start mock services
+TestRunner -> Studio: Execute test scenarios
+Studio -> Agents: Process workflows
+Agents -> DB: Data operations
+DB -> Validator: Validate results
+Studio -> PerfMon: Performance metrics
+PerfMon -> Validator: Performance validation
+Validator -> Reporter: Generate reports
+Reporter -> TestRunner: Test results
+
+@enduml

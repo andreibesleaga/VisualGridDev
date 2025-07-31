@@ -1,0 +1,41 @@
+@startuml
+title Self-Healing Response Timing
+
+robust "System Monitor" as Monitor
+robust "Anomaly Detection" as Anomaly
+robust "Recovery Action" as Recovery
+robust "System Health" as Health
+
+@0
+Monitor is Collecting
+Anomaly is Normal
+Recovery is Idle
+Health is Good
+
+@1000
+Monitor is Analyzing : Process metrics
+Anomaly is Detecting : Check patterns
+
+@2000
+Anomaly is Alert : Anomaly found!
+Recovery is Planning : Plan recovery
+
+@3000
+Recovery is Executing : Execute actions
+Health is Degraded : System stressed
+
+@4000
+Recovery is Monitoring : Check progress
+Health is Recovering : Improving
+
+@5000
+Recovery is Complete : Action finished
+Health is Good : System healthy
+
+@6000
+Monitor is Collecting : Resume monitoring
+Anomaly is Normal : No issues
+Recovery is Idle : Ready for next
+Health is Good : Stable
+
+@enduml

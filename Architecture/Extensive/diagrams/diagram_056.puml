@@ -1,0 +1,42 @@
+@startuml
+title Multi-Level Caching Strategy
+
+package "Client Layer" {
+    component "Browser Cache" as BrowserCache
+    component "Mobile Cache" as MobileCache
+}
+
+package "Edge Layer" {
+    component "CDN Cache" as CDN
+    component "Edge Cache" as EdgeCache
+}
+
+package "Application Layer" {
+    component "Application Cache" as AppCache
+    component "Session Cache" as SessionCache
+    component "Redis Cache" as Redis
+}
+
+package "Database Layer" {
+    component "Query Cache" as QueryCache
+    component "Database" as Database
+}
+
+BrowserCache -> CDN: Cache miss
+MobileCache -> CDN: Cache miss
+CDN -> EdgeCache: Cache miss
+EdgeCache -> AppCache: Cache miss
+AppCache -> Redis: Cache miss
+Redis -> QueryCache: Cache miss
+QueryCache -> Database: Query data
+Database -> QueryCache: Return data
+QueryCache -> Redis: Cache result
+Redis -> AppCache: Return data
+AppCache -> EdgeCache: Cache data
+EdgeCache -> CDN: Cache data
+CDN -> BrowserCache: Return data
+
+note right of Redis : Distributed cache\nfor session data
+note right of QueryCache : Database-level\nquery optimization
+
+@enduml

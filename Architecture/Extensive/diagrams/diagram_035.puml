@@ -1,0 +1,39 @@
+@startuml
+title Zero-Trust Security Architecture
+
+package "Identity Layer" {
+    component "Identity Provider" as IdP
+    component "Certificate Authority" as CA
+    component "Token Service" as TokenSvc
+}
+
+package "Policy Layer" {
+    component "Policy Engine" as PolicyEngine
+    component "RBAC Controller" as RBAC
+    component "Access Control" as AccessCtrl
+}
+
+package "Network Layer" {
+    component "mTLS Gateway" as mTLS
+    component "Network Policies" as NetPol
+    component "Traffic Encryption" as Encryption
+}
+
+package "Application Layer" {
+    component "Agent Authentication" as AgentAuth
+    component "API Authorization" as APIAuth
+    component "Audit Logger" as AuditLog
+}
+
+IdP -> TokenSvc: Issue tokens
+CA -> mTLS: Issue certificates
+TokenSvc -> AgentAuth: Validate tokens
+AgentAuth -> RBAC: Check permissions
+RBAC -> PolicyEngine: Evaluate policies
+PolicyEngine -> AccessCtrl: Grant/deny access
+mTLS -> Encryption: Secure transport
+NetPol -> Encryption: Network isolation
+AccessCtrl -> AuditLog: Log decisions
+APIAuth -> AuditLog: Log API calls
+
+@enduml

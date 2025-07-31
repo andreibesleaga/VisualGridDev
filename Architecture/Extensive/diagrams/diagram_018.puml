@@ -1,0 +1,33 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title VisualGridDev Studio - System Context
+
+Person(user, "System Designer", "Creates visual workflows, monitors system health")
+Person(admin, "Platform Admin", "Manages infrastructure, security, deployments")
+Person(developer, "Developer", "Extends system with custom nodes and agents")
+
+System_Boundary(VisualGridDev, "VisualGridDev Studio Platform") {
+    System(studio, "VisualGridDev Studio", "Visual workflow designer with real-time monitoring and collaborative editing")
+    System(mesh, "Self-Healing Mesh", "Distributed agent network with A2A/MCP protocols")
+    System(streaming, "Event Streaming", "Apache Kafka backbone for big data processing")
+    System(ai, "AI/ML Pipeline", "LangChain, SQLite-AI, vector search capabilities")
+}
+
+System_Ext(cloud, "Cloud Services", "AWS, Azure, GCP for scaling and deployment")
+System_Ext(data, "Enterprise Data", "Databases, APIs, file systems, data lakes")
+System_Ext(iot, "IoT/Edge Devices", "Sensors, gateways, industrial controllers")
+System_Ext(external, "External Systems", "Third-party APIs, legacy systems")
+
+Rel(user, studio, "Designs workflows visually")
+Rel(admin, studio, "Monitors, configures, deploys")
+Rel(developer, studio, "Creates custom nodes")
+Rel(studio, mesh, "Deploys and manages flows")
+Rel(mesh, streaming, "Publishes/consumes events")
+Rel(streaming, ai, "Processes data streams")
+Rel(mesh, cloud, "Auto-scales and deploys")
+Rel(mesh, data, "Ingests and processes data")
+Rel(mesh, iot, "Edge processing and control")
+Rel(mesh, external, "Integrates via MCP protocol")
+
+@enduml

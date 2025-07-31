@@ -1,0 +1,35 @@
+@startuml
+title Load Distribution Pattern
+
+package "Load Balancing Layer" {
+    component "Global Load Balancer" as GLB
+    component "Regional Load Balancer" as RLB
+    component "Service Mesh" as Mesh
+}
+
+package "Application Instances" {
+    component "Instance 1" as Inst1
+    component "Instance 2" as Inst2
+    component "Instance 3" as Inst3
+    component "Instance N" as InstN
+}
+
+package "Health Monitoring" {
+    component "Health Checker" as HealthCheck
+    component "Circuit Breaker" as CircuitBreaker
+    component "Retry Logic" as Retry
+}
+
+GLB -> RLB: Route by region
+RLB -> Mesh: Service discovery
+Mesh -> Inst1: Distribute load
+Mesh -> Inst2: Distribute load
+Mesh -> Inst3: Distribute load
+Mesh -> InstN: Distribute load
+HealthCheck -> Inst1: Check health
+HealthCheck -> Inst2: Check health
+HealthCheck -> Inst3: Check health
+CircuitBreaker -> Mesh: Circuit state
+Retry -> Mesh: Retry policies
+
+@enduml

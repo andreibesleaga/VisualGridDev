@@ -1,0 +1,42 @@
+@startuml
+!theme plain
+skinparam backgroundColor #1a1a1a
+skinparam rectangleBackgroundColor #2d3748
+skinparam rectangleBorderColor #4a5568
+skinparam fontColor #ffffff
+
+title VisualGridDev Studio - Live Monitoring Dashboard
+
+rectangle "System Overview" as overview {
+  rectangle "🟢 Agents: 24/25 Active" as agents
+  rectangle "📊 Throughput: 1,247 msg/sec" as throughput
+  rectangle "⚡ Latency: 12ms avg" as latency
+  rectangle "🔥 CPU: 45% | RAM: 62%" as resources
+}
+
+rectangle "Flow Execution Map" as flowmap {
+  rectangle "Flow A" as flowA #90EE90
+  rectangle "Flow B" as flowB #FFD700
+  rectangle "Flow C" as flowC #FF6B6B
+  
+  flowA --> flowB : 🟢 healthy
+  flowB --> flowC : 🟡 warning
+  
+  note right of flowA : 156 msg/min\n2ms latency
+  note right of flowB : 89 msg/min\n15ms latency
+  note right of flowC : 23 msg/min\n45ms latency
+}
+
+rectangle "Metrics Charts" as charts {
+  rectangle "Message Volume\n📈 ▲ 15% from last hour" as volume
+  rectangle "Error Rate\n📉 ▼ 0.02% (target: <0.1%)" as errors
+  rectangle "Response Time\n📊 12ms avg (target: <50ms)" as response
+}
+
+rectangle "Active Alerts" as alerts {
+  rectangle "🟡 High latency on Flow C" as alert1
+  rectangle "🔴 Agent-007 disconnected" as alert2
+  rectangle "🟢 Auto-scaling triggered +2 pods" as alert3
+}
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+title Edge Device Deployment Sequence
+
+participant "Cloud Controller" as Cloud
+participant "Edge Device" as Edge
+participant "SQLite-AI" as DB
+participant "Local Agent" as Agent
+participant "Sensor" as Sensor
+
+Cloud -> Edge: Deploy edge runtime
+Edge -> Edge: Initialize lightweight runtime
+Edge -> DB: Start SQLite-AI database
+Edge -> Agent: Start local agent
+Agent -> Agent: Register with mesh
+Agent -> Cloud: Announce availability
+
+loop Data Processing
+    Sensor -> Agent: Send sensor data
+    Agent -> DB: Store data locally
+    DB -> DB: Run AI inference
+    DB -> Agent: Return inference results
+    Agent -> Agent: Process results
+    
+    alt Network available
+        Agent -> Cloud: Sync results
+    else Offline mode
+        Agent -> DB: Store for later sync
+    end
+end
+
+@enduml

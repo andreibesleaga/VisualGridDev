@@ -1,0 +1,53 @@
+@startuml
+!theme plain
+skinparam backgroundColor #fff5f5
+
+title VisualGridDev Studio - Security Architecture View
+
+rectangle "Identity & Access Management" as iam {
+  rectangle "Multi-Factor\nAuthentication" as mfa
+  rectangle "Role-Based\nAccess Control" as rbac
+  rectangle "Certificate\nAuthority" as ca
+  rectangle "Token\nManagement" as tokens
+}
+
+rectangle "Network Security" as network {
+  rectangle "mTLS\nEncryption" as mtls
+  rectangle "Network\nPolicies" as netpol
+  rectangle "Service Mesh\n(Istio)" as mesh
+  rectangle "API Gateway\n& Rate Limiting" as gateway
+}
+
+rectangle "Data Protection" as data {
+  rectangle "End-to-End\nEncryption" as e2e
+  rectangle "Data\nClassification" as classification
+  rectangle "Key\nManagement" as keys
+  rectangle "Data Loss\nPrevention" as dlp
+}
+
+rectangle "Runtime Security" as runtime {
+  rectangle "Container\nSecurity" as containers
+  rectangle "Vulnerability\nScanning" as scanning
+  rectangle "Intrusion\nDetection" as ids
+  rectangle "Security\nMonitoring" as secmon
+}
+
+rectangle "Compliance & Audit" as compliance {
+  rectangle "Audit\nLogging" as audit
+  rectangle "Compliance\nReporting" as reporting
+  rectangle "Data\nGovernance" as governance
+  rectangle "Privacy\nControls" as privacy
+}
+
+iam --> network : authenticated access
+network --> data : secure transport
+data --> runtime : protected execution
+runtime --> compliance : audit trail
+
+note right of mfa : OAuth2/OIDC\nSAML integration
+note right of mtls : All inter-service\ncommunication
+note right of e2e : AES-256 encryption\nZero-trust model
+note right of containers : Pod security\nstandards
+note right of audit : Immutable logs\nSOC2 compliance
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+System_Boundary(visualgriddev, "VisualGridDev Platform") {
+  Container(ide, "Visual IDE", "React/TS", "Visual programming, live collaboration")
+  Container(api, "API Gateway", "Node.js/Express", "REST/gRPC/GraphQL")
+  Container(runtime, "Flow Runtime", "Node.js/Python", "Executes agent flows")
+  Container(mesh, "Mesh Agent", "libp2p, MQTT", "Self-healing, mesh comms")
+  Container(ai, "AI/ML Engine", "Python/LLM", "Inference, RAG, learning")
+  Container(monitor, "Monitoring Dashboard", "React/TS", "Real-time health/status")
+  Container(db, "Database", "Postgres/Redis", "State, config, logs")
+}
+Rel(ide, api, "API calls")
+Rel(api, runtime, "Deploys/Manages Flows")
+Rel(runtime, mesh, "Mesh comms")
+Rel(runtime, ai, "AI/ML calls")
+Rel(runtime, monitor, "Health/Status")
+Rel(api, db, "Reads/Writes")
+Rel(monitor, db, "Reads Metrics")
+@enduml

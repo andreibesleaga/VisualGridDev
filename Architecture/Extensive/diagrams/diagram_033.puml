@@ -1,0 +1,32 @@
+@startuml
+title Distributed Tracing Flow
+
+participant "User Request" as User
+participant "API Gateway" as Gateway
+participant "Flow Engine" as Flow
+participant "Agent A" as AgentA
+participant "Agent B" as AgentB
+participant "Database" as DB
+participant "Jaeger" as Tracer
+
+User -> Gateway: HTTP Request [trace-id: 123]
+Gateway -> Tracer: Start span [gateway]
+Gateway -> Flow: Process request [trace-id: 123]
+Flow -> Tracer: Start span [flow-engine]
+Flow -> AgentA: Execute task [trace-id: 123]
+AgentA -> Tracer: Start span [agent-a]
+AgentA -> AgentB: Call agent [trace-id: 123]
+AgentB -> Tracer: Start span [agent-b]
+AgentB -> DB: Query data [trace-id: 123]
+DB -> Tracer: Start span [database]
+DB -> AgentB: Return data
+AgentB -> Tracer: End span [agent-b]
+AgentB -> AgentA: Return result
+AgentA -> Tracer: End span [agent-a]
+AgentA -> Flow: Return result
+Flow -> Tracer: End span [flow-engine]
+Flow -> Gateway: Return response
+Gateway -> Tracer: End span [gateway]
+Gateway -> User: HTTP Response
+
+@enduml

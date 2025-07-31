@@ -1,0 +1,31 @@
+@startuml
+title GitOps Deployment Pipeline
+
+participant "Developer" as Dev
+participant "Git Repository" as Git
+participant "CI Pipeline" as CI
+participant "Container Registry" as Registry
+participant "ArgoCD" as ArgoCD
+participant "Kubernetes" as K8s
+participant "Monitoring" as Monitor
+
+Dev -> Git: Push code changes
+Git -> CI: Trigger build
+CI -> CI: Run tests
+CI -> Registry: Push container image
+CI -> Git: Update deployment manifest
+Git -> ArgoCD: Detect changes
+ArgoCD -> K8s: Deploy application
+K8s -> K8s: Rolling update
+K8s -> Monitor: Health checks
+Monitor -> ArgoCD: Deployment status
+ArgoCD -> Git: Update status
+
+alt Deployment fails
+    Monitor -> ArgoCD: Failure detected
+    ArgoCD -> K8s: Rollback deployment
+    K8s -> Monitor: Rollback complete
+    ArgoCD -> Dev: Notify failure
+end
+
+@enduml

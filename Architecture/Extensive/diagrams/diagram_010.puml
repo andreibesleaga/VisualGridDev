@@ -1,0 +1,31 @@
+@startuml
+title Edge Computing Component Interaction
+
+package "Edge Device" {
+    component "Edge Runtime" as EdgeRuntime
+    component "SQLite-AI" as EdgeDB
+    component "Local Agent" as EdgeAgent
+    component "Sensor Interface" as Sensors
+    component "Mesh Client" as MeshClient
+}
+
+package "Cloud Infrastructure" {
+    component "Cloud Controller" as CloudCtrl
+    component "Data Lake" as DataLake
+    component "ML Pipeline" as MLPipeline
+    component "Mesh Network" as MeshNet
+}
+
+Sensors -> EdgeAgent : Sensor data
+EdgeAgent -> EdgeDB : Store/query data
+EdgeDB -> EdgeAgent : AI inference results
+EdgeAgent -> MeshClient : Sync with cloud
+MeshClient -> MeshNet : Mesh communication
+MeshNet -> CloudCtrl : Status updates
+CloudCtrl -> DataLake : Aggregate data
+DataLake -> MLPipeline : Training data
+MLPipeline -> MeshNet : Model updates
+MeshNet -> MeshClient : Deploy models
+MeshClient -> EdgeDB : Update models
+
+@enduml

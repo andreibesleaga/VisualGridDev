@@ -1,0 +1,31 @@
+@startuml
+title Multi-Protocol Message Flow
+
+participant "Source Agent" as Source
+participant "Protocol Router" as Router
+participant "A2A Handler" as A2A
+participant "MCP Handler" as MCP
+participant "Kafka Handler" as Kafka
+participant "Target System" as Target
+
+Source -> Router: Unified message
+Router -> Router: Analyze target
+alt Internal Agent
+    Router -> A2A: Route via A2A
+    A2A -> Target: Direct agent call
+    Target -> A2A: Response
+    A2A -> Router: Return response
+else External System
+    Router -> MCP: Route via MCP
+    MCP -> Target: MCP tool call
+    Target -> MCP: Tool response
+    MCP -> Router: Return response
+else Event Stream
+    Router -> Kafka: Route via Kafka
+    Kafka -> Target: Event message
+    Target -> Kafka: Acknowledgment
+    Kafka -> Router: Confirm delivery
+end
+Router -> Source: Final response
+
+@enduml

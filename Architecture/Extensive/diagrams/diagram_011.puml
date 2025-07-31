@@ -1,0 +1,30 @@
+@startuml
+title Protocol Router Component Architecture
+
+package "Protocol Router" {
+    component "Message Dispatcher" as Dispatcher
+    component "A2A Handler" as A2AHandler
+    component "MCP Handler" as MCPHandler
+    component "Kafka Handler" as KafkaHandler
+    component "Protocol Selector" as Selector
+    component "Message Translator" as Translator
+    component "Load Balancer" as LoadBalancer
+}
+
+package "External Systems" {
+    component "AI Agents" as Agents
+    component "MCP Servers" as MCPServers
+    component "Kafka Cluster" as Kafka
+}
+
+Dispatcher -> Selector : Select protocol
+Selector -> Translator : Translate message
+Translator -> LoadBalancer : Balance load
+LoadBalancer -> A2AHandler : A2A messages
+LoadBalancer -> MCPHandler : MCP messages
+LoadBalancer -> KafkaHandler : Kafka messages
+A2AHandler -> Agents : Agent communication
+MCPHandler -> MCPServers : External tools
+KafkaHandler -> Kafka : Event streaming
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+title Mesh Network Topology
+
+!define AGENT circle
+!define EDGE rectangle
+!define CLOUD cloud
+
+AGENT Agent1
+AGENT Agent2
+AGENT Agent3
+AGENT Agent4
+EDGE EdgeDevice1
+EDGE EdgeDevice2
+CLOUD CloudCluster
+
+Agent1 -- Agent2 : A2A
+Agent1 -- Agent3 : A2A
+Agent2 -- Agent4 : A2A
+Agent3 -- Agent4 : A2A
+Agent1 -- EdgeDevice1 : Mesh
+Agent2 -- EdgeDevice2 : Mesh
+Agent3 -- CloudCluster : Mesh
+Agent4 -- CloudCluster : Mesh
+EdgeDevice1 -- CloudCluster : Sync
+EdgeDevice2 -- CloudCluster : Sync
+
+note right of Agent1 : Peer-to-peer\nGossip protocol
+note right of EdgeDevice1 : Offline capable\nLocal inference
+note right of CloudCluster : Central coordination\nModel distribution
+
+@enduml

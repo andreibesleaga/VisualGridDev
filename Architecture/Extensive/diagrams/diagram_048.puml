@@ -1,0 +1,29 @@
+@startuml
+title ML Model Lifecycle Management
+
+participant "Data Scientist" as DS
+participant "Model Registry" as Registry
+participant "Training Pipeline" as Training
+participant "Model Server" as Server
+participant "Edge Device" as Edge
+participant "Monitoring" as Monitor
+
+DS -> Training: Submit training job
+Training -> Training: Train model
+Training -> Registry: Register model
+Registry -> Registry: Version model
+DS -> Registry: Approve model
+Registry -> Server: Deploy to staging
+Server -> Monitor: Health checks
+Monitor -> Registry: Validation results
+Registry -> Server: Deploy to production
+Server -> Edge: Distribute model
+Edge -> Edge: Load model locally
+Edge -> Monitor: Model performance
+Monitor -> Registry: Performance metrics
+Registry -> DS: Model analytics
+
+note right of Registry : Model versioning,\nA/B testing, rollback
+note right of Edge : Local inference,\noffline capability
+
+@enduml

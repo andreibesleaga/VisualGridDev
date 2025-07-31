@@ -1,0 +1,56 @@
+@startuml
+!theme plain
+skinparam backgroundColor #f0f8ff
+
+title VisualGridDev Studio - Data Flow Architecture View
+
+!define DATASOURCE cloud
+!define PROCESSOR rectangle
+!define STORAGE database
+!define STREAM queue
+
+DATASOURCE "IoT Sensors\n& Devices" as iot
+DATASOURCE "External APIs\n& Services" as apis
+DATASOURCE "User Inputs\n& Commands" as users
+
+STREAM "Event Ingestion\nLayer" as ingestion {
+  PROCESSOR "Apache Kafka\nStreaming" as kafka
+  PROCESSOR "Message Router\n& Filter" as router
+}
+
+PROCESSOR "Processing Layer" as processing {
+  PROCESSOR "AI Agents\n(A2A/MCP)" as agents
+  PROCESSOR "Node-RED Flows\n(Visual Logic)" as flows
+  PROCESSOR "ML Inference\n(Python/FastAPI)" as ml
+  PROCESSOR "Stream Analytics\n(Apache Flink)" as analytics
+}
+
+STORAGE "Data Storage\nLayer" as storage {
+  STORAGE "SQLite-AI\n(Edge)" as sqliteai
+  STORAGE "Vector DB\n(Embeddings)" as vectordb
+  STORAGE "Time Series\n(InfluxDB)" as timeseries
+  STORAGE "Data Lake\n(Analytics)" as datalake
+}
+
+PROCESSOR "Output Layer" as output {
+  PROCESSOR "Real-time\nDashboards" as dashboards
+  PROCESSOR "API Responses\n& Webhooks" as responses
+  PROCESSOR "Alerts &\nNotifications" as alerts
+  PROCESSOR "Data Exports\n& Reports" as exports
+}
+
+iot --> ingestion : sensor data
+apis --> ingestion : external data
+users --> ingestion : commands
+
+ingestion --> processing : structured events
+processing --> storage : processed data
+storage --> processing : data queries
+processing --> output : results
+
+note right of kafka : 1M+ messages/sec\nFault-tolerant
+note right of agents : A2A protocol\nSelf-healing
+note right of flows : Visual programming\nReal-time execution
+note right of ml : AI/ML inference\nModel serving
+
+@enduml

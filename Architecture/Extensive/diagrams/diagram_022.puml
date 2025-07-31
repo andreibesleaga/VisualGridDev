@@ -1,0 +1,21 @@
+@startuml
+title Protocol Router - Code Architecture
+
+package "Protocol Router" {
+    [UnifiedMessage] <<Interface>>
+    [ProtocolHandler] <<Interface>>
+    [A2AProtocolHandler] <<Class>>
+    [MCPProtocolHandler] <<Class>>
+    [KafkaProtocolHandler] <<Class>>
+    [ProtocolRouter] <<Class>>
+    [FitnessEvaluator] <<Class>>
+}
+
+[ProtocolRouter] -down-> [ProtocolHandler] : uses
+[A2AProtocolHandler] -up-|> [ProtocolHandler] : implements
+[MCPProtocolHandler] -up-|> [ProtocolHandler] : implements
+[KafkaProtocolHandler] -up-|> [ProtocolHandler] : implements
+[ProtocolRouter] -down-> [FitnessEvaluator] : uses
+[ProtocolHandler] -down-> [UnifiedMessage] : processes
+
+@enduml

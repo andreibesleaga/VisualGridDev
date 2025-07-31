@@ -1,0 +1,33 @@
+@startuml
+title Self-Healing MAPE-K Sequence
+
+participant "System Monitor" as Monitor
+participant "Anomaly Analyzer" as Analyzer
+participant "Recovery Planner" as Planner
+participant "Action Executor" as Executor
+participant "Knowledge Base" as Knowledge
+participant "Affected Node" as Node
+
+loop Every 5 seconds
+    Monitor -> Monitor: Collect metrics
+    Monitor -> Analyzer: Send health data
+    
+    alt Anomaly detected
+        Analyzer -> Planner: Report anomaly
+        Planner -> Planner: Generate recovery plan
+        Planner -> Executor: Execute recovery actions
+        
+        alt Restart required
+            Executor -> Node: Restart service
+            Node -> Executor: Confirm restart
+        else Scale up required
+            Executor -> Node: Scale up instances
+            Node -> Executor: Confirm scaling
+        end
+        
+        Executor -> Knowledge: Update experience
+        Knowledge -> Analyzer: Update ML models
+    end
+end
+
+@enduml

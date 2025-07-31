@@ -1,0 +1,26 @@
+@startuml
+title Operational Transformation for Collaborative Editing
+
+participant "Client A" as ClientA
+participant "Client B" as ClientB
+participant "OT Server" as OTServer
+participant "State Manager" as StateManager
+
+ClientA -> OTServer: Operation Op1
+OTServer -> StateManager: Apply Op1
+StateManager -> OTServer: State updated
+OTServer -> ClientB: Send Op1
+
+ClientB -> OTServer: Operation Op2 (concurrent)
+OTServer -> StateManager: Get current state
+StateManager -> OTServer: Return state
+OTServer -> OTServer: Transform Op2 against Op1
+OTServer -> StateManager: Apply transformed Op2
+StateManager -> OTServer: State updated
+OTServer -> ClientA: Send transformed Op2
+OTServer -> ClientB: Confirm Op2
+
+note right of OTServer : Operational Transformation\nensures consistency
+note right of StateManager : Maintains canonical\ndocument state
+
+@enduml

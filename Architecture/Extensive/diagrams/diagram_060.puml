@@ -1,0 +1,69 @@
+@startuml
+!theme plain
+skinparam backgroundColor #f8f9fa
+skinparam componentStyle rectangle
+
+title VisualGridDev Studio - Main Interface
+
+rectangle "Header Bar" as header {
+  rectangle "VisualGridDev Studio" as logo
+  rectangle "File | Edit | View | Deploy | Help" as menu
+  rectangle "User: admin | Settings | Logout" as user
+}
+
+rectangle "Left Panel" as left {
+  rectangle "Node Palette" as palette {
+    rectangle "🤖 AI Agents" as agents
+    rectangle "🔄 Node-RED Nodes" as nodered
+    rectangle "🧠 AI/ML Nodes" as aiml
+    rectangle "💾 SQLite-AI Nodes" as sqlite
+    rectangle "🔌 Integration Nodes" as integration
+  }
+  
+  rectangle "Project Explorer" as explorer {
+    rectangle "📁 My Flows" as flows
+    rectangle "📊 Dashboards" as dashboards
+    rectangle "⚙️ Configurations" as configs
+  }
+}
+
+rectangle "Center Canvas" as canvas {
+  rectangle "Visual Flow Designer" as designer {
+    rectangle "Node A" as nodeA
+    rectangle "Node B" as nodeB
+    rectangle "Node C" as nodeC
+    nodeA --> nodeB : data flow
+    nodeB --> nodeC : processed data
+  }
+  
+  rectangle "Canvas Controls" as controls {
+    rectangle "🔍 Zoom | 📐 Grid | 💾 Save | ▶️ Deploy" as toolbar
+  }
+}
+
+rectangle "Right Panel" as right {
+  rectangle "Properties Panel" as properties {
+    rectangle "Node Configuration" as nodeconfig
+    rectangle "Code Editor" as codeeditor
+    rectangle "Parameters" as params
+  }
+  
+  rectangle "Live Monitoring" as monitoring {
+    rectangle "📈 Metrics" as metrics
+    rectangle "📋 Logs" as logs
+    rectangle "🚨 Alerts" as alerts
+  }
+}
+
+rectangle "Bottom Panel" as bottom {
+  rectangle "Console Output" as console
+  rectangle "Deployment Status" as deploy
+  rectangle "System Health" as health
+}
+
+header -down-> left
+header -down-> canvas
+header -down-> right
+canvas -down-> bottom
+
+@enduml

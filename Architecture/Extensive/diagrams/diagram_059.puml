@@ -1,0 +1,28 @@
+@startuml
+title Chaos Engineering Testing
+
+participant "Chaos Controller" as Chaos
+participant "Target System" as System
+participant "Monitoring" as Monitor
+participant "Recovery System" as Recovery
+participant "Test Validator" as Validator
+
+Chaos -> System: Inject failure
+System -> System: Experience failure
+System -> Monitor: Send alerts
+Monitor -> Recovery: Trigger recovery
+Recovery -> System: Execute recovery
+System -> Monitor: Report status
+Monitor -> Validator: Validate recovery
+Validator -> Chaos: Recovery successful
+
+alt Recovery failed
+    Validator -> Chaos: Recovery failed
+    Chaos -> System: Stop chaos experiment
+    System -> Recovery: Manual intervention
+end
+
+note right of Chaos : Network partitions,\nservice failures, resource exhaustion
+note right of Recovery : Automated healing,\nfailover, scaling
+
+@enduml

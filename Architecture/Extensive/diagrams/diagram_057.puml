@@ -1,0 +1,27 @@
+@startuml
+title Performance Monitoring and Optimization
+
+participant "Application" as App
+participant "Metrics Collector" as Collector
+participant "Time Series DB" as TSDB
+participant "Alert Manager" as AlertMgr
+participant "Auto Scaler" as Scaler
+participant "Performance Optimizer" as Optimizer
+
+loop Every 15 seconds
+    App -> Collector: Send metrics
+    Collector -> TSDB: Store metrics
+    TSDB -> AlertMgr: Check thresholds
+    
+    alt Performance degradation
+        AlertMgr -> Scaler: Trigger scaling
+        Scaler -> App: Scale resources
+        AlertMgr -> Optimizer: Optimize performance
+        Optimizer -> App: Apply optimizations
+    end
+end
+
+note right of Collector : CPU, memory, latency,\nthroughput metrics
+note right of Optimizer : Query optimization,\ncache tuning, resource allocation
+
+@enduml

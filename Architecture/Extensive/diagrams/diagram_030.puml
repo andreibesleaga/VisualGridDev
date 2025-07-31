@@ -1,0 +1,29 @@
+@startuml
+title Protocol Negotiation Sequence
+
+participant "Client Agent" as Client
+participant "Protocol Router" as Router
+participant "Fitness Evaluator" as Fitness
+participant "Target Agent" as Target
+
+Client -> Router: Message with target
+Router -> Fitness: Evaluate protocols
+Fitness -> Fitness: Check latency requirements
+Fitness -> Fitness: Check reliability needs
+Fitness -> Fitness: Check security level
+Fitness -> Router: Recommend protocol
+
+alt High Priority
+    Router -> Target: Use gRPC
+else Agent-to-Agent
+    Router -> Target: Use A2A
+else External System
+    Router -> Target: Use MCP
+else Default
+    Router -> Target: Use WebSocket
+end
+
+Target -> Router: Response
+Router -> Client: Deliver response
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+title Data Flow Network Architecture
+
+package "Data Sources" {
+    component [IoT Sensors] as Sensors
+    component [External APIs] as APIs
+    component [Databases] as DBs
+}
+
+package "Edge Layer" {
+    component [Edge Agents] as EdgeAgents
+    component [SQLite-AI] as EdgeDB
+    component [Local Processing] as LocalProc
+}
+
+package "Streaming Layer" {
+    component [Apache Kafka] as Kafka
+    component [Apache Flink] as Flink
+    component [Redis Streams] as Redis
+}
+
+package "Cloud Layer" {
+    component [ML Pipeline] as MLPipe
+    component [Data Lake] as DataLake
+    component [Analytics] as Analytics
+}
+
+Sensors --> EdgeAgents : Real-time data
+APIs --> Kafka : API events
+DBs --> Kafka : Change streams
+EdgeAgents --> EdgeDB : Local storage
+EdgeDB --> LocalProc : AI inference
+LocalProc --> Kafka : Processed data
+Kafka --> Flink : Stream processing
+Flink --> DataLake : Aggregated data
+DataLake --> MLPipe : Training data
+MLPipe --> Analytics : Model results
+Analytics --> EdgeAgents : Model updates
+
+@enduml

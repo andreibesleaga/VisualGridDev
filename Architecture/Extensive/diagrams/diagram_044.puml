@@ -1,0 +1,10 @@
+@startuml
+actor User1
+actor User2
+participant IDE as "Visual IDE"
+participant Server as "Collab Server"
+User1 -> IDE : Edit Flow
+IDE -> Server : Sync Change
+Server -> IDE : Broadcast Change
+User2 -> IDE : Receives Update
+@enduml

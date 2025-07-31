@@ -1,0 +1,32 @@
+@startuml
+title Event Sourcing Architecture
+
+package "Command Side" {
+    component "Command Handler" as CmdHandler
+    component "Aggregate" as Aggregate
+    component "Event Store" as EventStore
+}
+
+package "Query Side" {
+    component "Event Projector" as Projector
+    component "Read Model" as ReadModel
+    component "Query Handler" as QueryHandler
+}
+
+package "Event Bus" {
+    component "Apache Kafka" as Kafka
+    component "Event Router" as Router
+}
+
+CmdHandler -> Aggregate: Execute command
+Aggregate -> EventStore: Store events
+EventStore -> Kafka: Publish events
+Kafka -> Router: Route events
+Router -> Projector: Project events
+Projector -> ReadModel: Update views
+QueryHandler -> ReadModel: Query data
+
+note right of EventStore : Immutable event log,\nfull audit trail
+note right of ReadModel : Optimized for queries,\neventual consistency
+
+@enduml

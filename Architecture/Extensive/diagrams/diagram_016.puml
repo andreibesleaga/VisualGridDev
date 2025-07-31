@@ -1,0 +1,48 @@
+@startuml
+title Real-time Flow Execution Timing
+
+robust "User Input" as User
+robust "Flow Engine" as Engine
+robust "Node Processing" as Nodes
+robust "Database" as DB
+robust "UI Update" as UI
+
+@0
+User is Idle
+Engine is Waiting
+Nodes is Ready
+DB is Available
+UI is Displaying
+
+@100
+User is Active : User triggers flow
+Engine is Processing : Validate input
+
+@200
+Engine is Executing : Start flow
+Nodes is Processing : Execute nodes
+
+@300
+Nodes is Querying : Query data
+DB is Processing : Process query
+
+@400
+DB is Responding : Return results
+Nodes is Computing : Process results
+
+@500
+Nodes is Complete : Finish processing
+Engine is Updating : Update state
+
+@600
+Engine is Notifying : Send updates
+UI is Refreshing : Update display
+
+@700
+User is Viewing : See results
+Engine is Waiting : Ready for next
+Nodes is Ready : Available
+DB is Available : Ready
+UI is Displaying : Show results
+
+@enduml

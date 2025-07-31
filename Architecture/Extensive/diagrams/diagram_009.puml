@@ -1,0 +1,29 @@
+@startuml
+title Self-Healing Activity
+
+start
+:Monitor system metrics;
+:Analyze health data;
+if (Anomaly detected?) then (yes)
+    :Classify anomaly type;
+    if (High CPU?) then (yes)
+        :Scale up resources;
+    elseif (High error rate?) then (yes)
+        :Restart affected service;
+    elseif (Network partition?) then (yes)
+        :Trigger failover;
+    else (Other)
+        :Apply generic recovery;
+    endif
+    :Execute recovery action;
+    :Monitor recovery progress;
+    if (Recovery successful?) then (no)
+        :Escalate to manual intervention;
+        stop
+    endif
+    :Update knowledge base;
+endif
+:Continue monitoring;
+stop
+
+@enduml

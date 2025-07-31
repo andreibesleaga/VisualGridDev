@@ -1,0 +1,22 @@
+@startuml
+actor Developer
+actor Admin
+rectangle "VisualGridDev Platform" {
+  rectangle "Visual IDE" as IDE
+  rectangle "API Gateway" as API
+  rectangle "Flow Runtime" as RT
+  rectangle "Mesh Agent" as Mesh
+  rectangle "AI/ML Engine" as AI
+  rectangle "Monitoring Dashboard" as Mon
+  rectangle "Database" as DB
+}
+Developer --> IDE : Uses
+Admin --> Mon : Monitors
+IDE --> API : API Calls
+API --> RT : Deploys Flows
+RT --> Mesh : Mesh Comms
+RT --> AI : AI/ML Calls
+RT --> Mon : Health/Status
+API --> DB : State/Config
+Mon --> DB : Metrics
+@enduml

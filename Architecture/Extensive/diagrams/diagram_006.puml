@@ -1,0 +1,22 @@
+@startuml
+title Flow Execution States
+
+[*] -> Idle : Flow created
+Idle -> Starting : Trigger received
+Starting -> Running : All nodes ready
+Starting -> Error : Node startup fails
+Running -> Processing : Message received
+Processing -> Running : Message processed
+Processing -> Error : Processing fails
+Error -> Running : Error recovered
+Error -> Stopped : Unrecoverable error
+Running -> Pausing : User pauses
+Pausing -> Paused : Pause complete
+Paused -> Resuming : User resumes
+Resuming -> Running : Resume complete
+Running -> Stopping : User stops
+Stopping -> Stopped : Stop complete
+Stopped -> Starting : User restarts
+Stopped -> [*] : Flow deleted
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+title Event-Driven Architecture Pattern
+
+package "Event Producers" {
+    component "User Actions" as UserEvents
+    component "System Events" as SysEvents
+    component "Sensor Data" as SensorEvents
+}
+
+package "Event Backbone" {
+    component "Apache Kafka" as Kafka
+    component "Event Router" as EventRouter
+    component "Dead Letter Queue" as DLQ
+}
+
+package "Event Consumers" {
+    component "Flow Processor" as FlowProc
+    component "Analytics Engine" as Analytics
+    component "Alert Manager" as Alerts
+    component "Audit Logger" as Audit
+}
+
+UserEvents -> Kafka: User interactions
+SysEvents -> Kafka: System changes
+SensorEvents -> Kafka: Sensor readings
+Kafka -> EventRouter: Route events
+EventRouter -> FlowProc: Process flows
+EventRouter -> Analytics: Analyze data
+EventRouter -> Alerts: Check alerts
+EventRouter -> Audit: Log events
+EventRouter -> DLQ: Failed events
+
+@enduml

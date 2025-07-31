@@ -1,0 +1,15 @@
+@startuml
+actor User
+actor Admin
+rectangle "VisualGridDev Platform" {
+  rectangle "Self-Healing Agent" as Agent
+  rectangle "Extension Manager" as Ext
+  rectangle "Security Policy Engine" as Sec
+  rectangle "Monitoring Dashboard" as Mon
+}
+User --> Agent : Uses
+Admin --> Mon : Monitors
+Agent --> Ext : Loads/Validates Plugins
+Agent --> Sec : Enforces Policies
+Agent --> Mon : Reports Health/Security
+@enduml

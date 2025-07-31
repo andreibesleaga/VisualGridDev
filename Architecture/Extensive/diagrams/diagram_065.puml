@@ -1,0 +1,64 @@
+@startuml
+!theme plain
+skinparam backgroundColor #f8fff8
+
+title VisualGridDev Studio - General System Architecture View
+
+cloud "Users & Clients" as users {
+  actor "System Designer" as designer
+  actor "Data Scientist" as datascientist
+  actor "DevOps Engineer" as devops
+  actor "Business User" as business
+}
+
+rectangle "VisualGridDev Studio Platform" as platform {
+  rectangle "Presentation Layer" as presentation {
+    rectangle "Web UI\n(React)" as webui
+    rectangle "Mobile App\n(React Native)" as mobile
+    rectangle "API Gateway\n(Kong/Istio)" as api
+  }
+  
+  rectangle "Application Layer" as application {
+    rectangle "Visual Flow\nDesigner" as designer_app
+    rectangle "Agent\nOrchestrator" as orchestrator
+    rectangle "Deployment\nManager" as deployment
+    rectangle "Monitoring\nService" as monitoring
+  }
+  
+  rectangle "Runtime Layer" as runtime {
+    rectangle "AI Agents\n(A2A/MCP)" as agents
+    rectangle "Node-RED\nRuntime" as nodered
+    rectangle "ML Services\n(Python)" as mlservices
+    rectangle "Protocol\nRouter" as router
+  }
+  
+  rectangle "Infrastructure Layer" as infrastructure {
+    rectangle "Kubernetes\nOrchestration" as k8s
+    rectangle "Service Mesh\n(Istio)" as servicemesh
+    rectangle "Message Queue\n(Kafka)" as messagequeue
+    rectangle "Monitoring\n(Prometheus)" as prometheus
+  }
+}
+
+rectangle "Data & Storage" as datastorage {
+  database "SQLite-AI\n(Edge)" as sqliteai
+  database "Vector DB\n(Pinecone)" as vectordb
+  database "Time Series\n(InfluxDB)" as influxdb
+  database "Object Storage\n(S3)" as objectstorage
+}
+
+rectangle "External Systems" as external {
+  cloud "Cloud Services\n(AWS/Azure/GCP)" as cloudservices
+  rectangle "Enterprise\nSystems" as enterprise
+  rectangle "IoT Devices\n& Sensors" as iot
+  rectangle "Third-party\nAPIs" as thirdparty
+}
+
+users --> presentation : interact
+presentation --> application : requests
+application --> runtime : execute
+runtime --> infrastructure : deploy
+infrastructure --> datastorage : store/retrieve
+runtime --> external : integrate
+
+@enduml

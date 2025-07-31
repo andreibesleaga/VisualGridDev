@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+skinparam backgroundColor #fffef7
+
+title VisualGridDev Studio - End-to-End Message Flow
+
+participant "IoT Sensor" as sensor
+participant "Edge Agent" as edge
+participant "Kafka Stream" as kafka
+participant "Flow Engine" as flow
+participant "AI Service" as ai
+participant "Database" as db
+participant "Dashboard" as dashboard
+participant "Alert System" as alerts
+
+sensor -> edge: sensor_data
+note right: Temperature: 25.3°C\nTimestamp: 2024-01-15T10:30:00Z
+
+edge -> edge: local_processing
+note right: Data validation\nFormat conversion\nLocal caching
+
+edge -> kafka: publish_event
+note right: Topic: sensor.temperature\nPartition: device_001
+
+kafka -> flow: consume_event
+note right: Node-RED flow\nTriggered by event
+
+flow -> ai: analyze_data
+note right: ML inference\nAnomaly detection
+
+ai -> ai: run_model
+note right: Temperature trend analysis\nPredictive modeling
+
+ai -> flow: analysis_result
+note right: Status: normal\nTrend: stable\nNext_reading: 25.5°C
+
+flow -> db: store_result
+note right: SQLite-AI storage\nVector embedding
+
+flow -> dashboard: update_display
+note right: Real-time visualization\nMetrics update
+
+alt Anomaly detected
+    ai -> alerts: trigger_alert
+    note right: Temperature spike detected\nThreshold exceeded
+    alerts -> dashboard: show_alert
+    alerts -> edge: send_notification
+end
+
+@enduml

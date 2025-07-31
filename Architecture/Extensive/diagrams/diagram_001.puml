@@ -1,0 +1,24 @@
+@startuml
+title Flow Deployment Sequence
+
+actor User
+participant "VisualGridDev Studio" as Studio
+participant "Protocol Router" as Router
+participant "Kafka" as Kafka
+participant "AI Agent" as Agent
+participant "Node-RED Runtime" as NodeRED
+participant "MAPE-K Controller" as MAPEK
+
+User -> Studio: Create visual flow
+Studio -> Studio: Validate flow configuration
+Studio -> Router: Deploy flow request
+Router -> Kafka: Publish deployment event
+Kafka -> Agent: Consume deployment event
+Agent -> NodeRED: Initialize flow runtime
+NodeRED -> NodeRED: Load flow nodes
+NodeRED -> Kafka: Publish flow ready event
+Kafka -> MAPEK: Monitor flow health
+MAPEK -> Studio: Update deployment status
+Studio -> User: Show flow deployed
+
+@enduml

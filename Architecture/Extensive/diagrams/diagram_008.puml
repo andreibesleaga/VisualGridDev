@@ -1,0 +1,28 @@
+@startuml
+title Visual Flow Creation Activity
+
+start
+:User opens VisualGridDev Studio;
+:Select node from palette;
+:Drag node to canvas;
+:Configure node parameters;
+if (Code editing required?) then (yes)
+    :Open inline code editor;
+    :Write Python/JS/SQL code;
+    :Validate code syntax;
+    if (Syntax valid?) then (no)
+        :Show error message;
+        stop
+    endif
+endif
+:Connect nodes with edges;
+:Validate flow logic;
+if (Flow valid?) then (no)
+    :Show validation errors;
+    stop
+endif
+:Deploy flow to runtime;
+:Start real-time monitoring;
+stop
+
+@enduml

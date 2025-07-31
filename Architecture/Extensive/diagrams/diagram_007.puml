@@ -1,0 +1,21 @@
+@startuml
+title Agent State Machine
+
+[*] -> Initializing : Agent created
+Initializing -> Registering : Initialize complete
+Registering -> Available : Registration successful
+Registering -> Failed : Registration failed
+Failed -> Registering : Retry registration
+Available -> Busy : Task assigned
+Busy -> Available : Task completed
+Busy -> Error : Task failed
+Error -> Available : Error recovered
+Error -> Failed : Unrecoverable error
+Available -> Updating : Configuration update
+Updating -> Available : Update successful
+Updating -> Failed : Update failed
+Available -> Disconnecting : Shutdown requested
+Disconnecting -> Disconnected : Cleanup complete
+Disconnected -> [*] : Agent destroyed
+
+@enduml

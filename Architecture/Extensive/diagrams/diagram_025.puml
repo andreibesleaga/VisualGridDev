@@ -1,0 +1,36 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title VisualGridDev Studio - Enterprise Landscape
+
+Enterprise_Boundary(enterprise, "Enterprise") {
+    System_Boundary(VisualGridDev, "VisualGridDev Platform") {
+        System(studio, "VisualGridDev Studio")
+        System(mesh, "Agent Mesh")
+        System(streaming, "Event Streaming")
+    }
+    
+    System_Boundary(infrastructure, "Infrastructure") {
+        System(k8s, "Kubernetes")
+        System(monitoring, "Observability")
+        System(security, "Security Stack")
+    }
+    
+    System_Boundary(data, "Data Platform") {
+        System(datalake, "Data Lake")
+        System(warehouse, "Data Warehouse")
+        System(analytics, "Analytics")
+    }
+}
+
+System_Ext(cloud, "Cloud Providers")
+System_Ext(saas, "SaaS Applications")
+System_Ext(legacy, "Legacy Systems")
+
+Rel(VisualGridDev, infrastructure, "Deployed on")
+Rel(VisualGridDev, data, "Processes data")
+Rel(infrastructure, cloud, "Runs on")
+Rel(VisualGridDev, saas, "Integrates with")
+Rel(VisualGridDev, legacy, "Modernizes")
+
+@enduml

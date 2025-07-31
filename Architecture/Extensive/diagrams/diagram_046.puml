@@ -1,0 +1,11 @@
+@startuml
+actor Admin
+participant "Visual IDE" as IDE
+participant "Self-Healing Agent" as Agent
+participant "Monitoring Dashboard" as Mon
+Admin -> IDE : View Dashboard
+IDE -> Mon : Request Status
+Mon -> Agent : Poll Health
+Agent -> Mon : Health/Incident Report
+Mon -> IDE : Update Dashboard
+@enduml

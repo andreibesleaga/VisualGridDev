@@ -1,0 +1,41 @@
+@startuml
+title VisualGridDev Studio Use Cases
+
+left to right direction
+
+actor "System Designer" as Designer
+actor "Platform Admin" as Admin
+actor "Developer" as Dev
+actor "Data Scientist" as DataSci
+
+package "VisualGridDev Studio" {
+    usecase "Create Visual Flow" as CreateFlow
+    usecase "Deploy Flow" as DeployFlow
+    usecase "Monitor System" as Monitor
+    usecase "Configure Nodes" as ConfigNodes
+    usecase "Write Custom Code" as WriteCode
+    usecase "Manage Agents" as ManageAgents
+    usecase "Scale System" as Scale
+    usecase "Debug Flows" as Debug
+    usecase "Train ML Models" as TrainML
+    usecase "Analyze Data" as AnalyzeData
+}
+
+Designer --> CreateFlow
+Designer --> DeployFlow
+Designer --> ConfigNodes
+Designer --> Debug
+
+Admin --> Monitor
+Admin --> ManageAgents
+Admin --> Scale
+
+Dev --> WriteCode
+Dev --> CreateFlow
+Dev --> Debug
+
+DataSci --> TrainML
+DataSci --> AnalyzeData
+DataSci --> CreateFlow
+
+@enduml

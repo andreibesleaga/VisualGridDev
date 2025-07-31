@@ -1,0 +1,25 @@
+@startuml
+title Automated Failover Sequence
+
+participant "Health Monitor" as Monitor
+participant "Failover Controller" as Controller
+participant "Primary System" as Primary
+participant "Secondary System" as Secondary
+participant "Load Balancer" as LB
+participant "DNS Service" as DNS
+
+Monitor -> Primary: Health check
+Primary -> Monitor: No response (timeout)
+Monitor -> Controller: Primary failure detected
+Controller -> Secondary: Activate secondary
+Secondary -> Secondary: Start services
+Secondary -> Controller: Services ready
+Controller -> LB: Update backend
+LB -> LB: Route to secondary
+Controller -> DNS: Update DNS records
+DNS -> DNS: Propagate changes
+Controller -> Monitor: Failover complete
+
+note right of Controller : RTO: 30 seconds\nRPO: 5 minutes
+
+@enduml

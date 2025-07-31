@@ -1,0 +1,33 @@
+@startuml
+title Auto-scaling Architecture
+
+package "Metrics Collection" {
+    component "Prometheus" as Metrics
+    component "Custom Metrics" as CustomMetrics
+    component "Resource Monitor" as ResourceMon
+}
+
+package "Scaling Decision" {
+    component "HPA Controller" as HPA
+    component "VPA Controller" as VPA
+    component "Custom Scaler" as CustomScaler
+}
+
+package "Scaling Actions" {
+    component "Kubernetes API" as K8sAPI
+    component "Node Provisioner" as NodeProv
+    component "Load Balancer" as LB
+}
+
+ResourceMon -> Metrics: System metrics
+CustomMetrics -> Metrics: Application metrics
+Metrics -> HPA: CPU/Memory metrics
+Metrics -> VPA: Resource recommendations
+Metrics -> CustomScaler: Custom metrics
+HPA -> K8sAPI: Scale pods
+VPA -> K8sAPI: Update resources
+CustomScaler -> NodeProv: Add nodes
+K8sAPI -> LB: Update endpoints
+NodeProv -> K8sAPI: Register nodes
+
+@enduml

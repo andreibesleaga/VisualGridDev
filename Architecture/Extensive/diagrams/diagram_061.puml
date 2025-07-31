@@ -1,0 +1,36 @@
+@startuml
+!theme plain
+skinparam backgroundColor #ffffff
+
+title Node Configuration Dialog - AI Agent Node
+
+rectangle "Node Configuration: AI Agent" as dialog {
+  rectangle "Basic Settings" as basic {
+    rectangle "Name: [Customer Service Agent]" as name
+    rectangle "Type: [A2A Communication]" as type
+    rectangle "Protocol: [A2A] [MCP] [HTTP]" as protocol
+  }
+  
+  rectangle "Agent Configuration" as agentconfig {
+    rectangle "Agent ID: [agent-001]" as agentid
+    rectangle "Capabilities: [chat, analysis, routing]" as capabilities
+    rectangle "Model: [gpt-4] [claude-3] [custom]" as model
+  }
+  
+  rectangle "Code Editor" as editor {
+    rectangle "Python Code:" as pythonlabel
+    rectangle "```python\nasync def process_message(context):\n    message = context.get_message()\n    response = await ai_model.generate(\n        prompt=message.content\n    )\n    return response\n```" as code
+  }
+  
+  rectangle "Connection Settings" as connections {
+    rectangle "Input Ports: [message_in]" as inputs
+    rectangle "Output Ports: [response_out, error_out]" as outputs
+    rectangle "Error Handling: [retry, fallback, alert]" as errors
+  }
+  
+  rectangle "Actions" as actions {
+    rectangle "[Test] [Save] [Cancel] [Deploy]" as buttons
+  }
+}
+
+@enduml

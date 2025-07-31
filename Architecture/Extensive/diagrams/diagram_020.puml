@@ -1,0 +1,35 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title VisualGridDev Studio IDE - Component Architecture
+
+Container_Boundary(studio, "VisualGridDev Studio IDE") {
+    Component(canvas, "Visual Canvas", "React Flow", "Drag-and-drop workflow designer")
+    Component(palette, "Node Palette", "React", "Categorized node library with search")
+    Component(editor, "Code Editor", "Monaco Editor", "Inline Python/JS/SQL editing")
+    Component(monitor, "Real-time Monitor", "D3.js/WebGL", "Live workflow visualization")
+    Component(collab, "Collaboration Engine", "Y.js/WebRTC", "Multi-user real-time editing")
+    
+    Component(semantic, "Semantic Search", "TypeScript", "AI-powered flow discovery")
+    Component(noderegistry, "Node Registry", "TypeScript", "Plugin and node management")
+    Component(flowengine, "Flow Engine", "JavaScript", "Flow validation and execution")
+    Component(statemanager, "State Manager", "Zustand", "Application state synchronization")
+    Component(websocket, "WebSocket Client", "TypeScript", "Real-time communication")
+}
+
+Container_Ext(router, "Protocol Router", "Message routing")
+Container_Ext(agents, "AI Agents", "A2A/MCP protocols")
+Container_Ext(vectordb, "Vector Database", "Semantic search")
+
+Rel(canvas, palette, "Drag nodes")
+Rel(canvas, editor, "Edit node code")
+Rel(canvas, monitor, "Live updates")
+Rel(collab, statemanager, "Sync state")
+Rel(semantic, vectordb, "Search flows")
+Rel(flowengine, router, "Deploy flows")
+Rel(flowengine, agents, "Deploy agents")
+Rel(noderegistry, palette, "Load plugins")
+Rel(websocket, monitor, "Real-time data")
+Rel(websocket, collab, "Collaboration events")
+
+@enduml

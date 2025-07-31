@@ -1,0 +1,30 @@
+@startuml
+title Real-time Collaboration System
+
+participant "User A" as UserA
+participant "User B" as UserB
+participant "Collaboration Server" as CollabServer
+participant "Conflict Resolver" as Resolver
+participant "Version Control" as VersionCtrl
+participant "Broadcast Service" as Broadcast
+
+UserA -> CollabServer: Edit flow node
+CollabServer -> Resolver: Check conflicts
+Resolver -> VersionCtrl: Get latest version
+VersionCtrl -> Resolver: Return version
+Resolver -> CollabServer: No conflicts
+CollabServer -> Broadcast: Broadcast change
+Broadcast -> UserB: Update UI
+
+UserB -> CollabServer: Edit same node
+CollabServer -> Resolver: Check conflicts
+Resolver -> Resolver: Detect conflict
+Resolver -> CollabServer: Conflict detected
+CollabServer -> UserA: Conflict notification
+CollabServer -> UserB: Conflict notification
+UserA -> CollabServer: Resolve conflict
+CollabServer -> VersionCtrl: Save resolution
+VersionCtrl -> Broadcast: Broadcast resolution
+Broadcast -> UserB: Apply resolution
+
+@enduml

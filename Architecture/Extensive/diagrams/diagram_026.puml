@@ -1,0 +1,41 @@
+@startuml
+title Edge Device Internal Architecture
+
+package "Edge Device (Raspberry Pi)" {
+    component "Edge Runtime Manager" as Runtime {
+        component "Lightweight Core" as Core
+        component "Resource Monitor" as Monitor
+        component "Auto-scaler" as Scaler
+    }
+    
+    component "Agent Layer" as Agents {
+        component "Local Agent" as LocalAgent
+        component "Mesh Client" as MeshClient
+        component "Protocol Handler" as Protocol
+    }
+    
+    component "Data Layer" as Data {
+        component "SQLite-AI" as DB
+        component "Vector Store" as Vector
+        component "Model Cache" as Cache
+    }
+    
+    component "Hardware Interface" as Hardware {
+        component "GPIO Controller" as GPIO
+        component "Sensor Interface" as Sensors
+        component "Network Interface" as Network
+    }
+}
+
+Core --> Monitor : Health metrics
+Monitor --> Scaler : Scale decisions
+LocalAgent --> Protocol : Message handling
+Protocol --> MeshClient : Mesh communication
+LocalAgent --> DB : Data operations
+DB --> Vector : Vector queries
+Vector --> Cache : Model access
+GPIO --> Sensors : Sensor data
+Sensors --> LocalAgent : Data input
+Network --> MeshClient : Network I/O
+
+@enduml

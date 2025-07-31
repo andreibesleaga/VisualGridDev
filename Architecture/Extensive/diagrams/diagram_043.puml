@@ -1,0 +1,11 @@
+@startuml
+[*] --> Designing
+Designing --> Deploying : Deploy Flow
+Deploying --> Running : Success
+Deploying --> Error : Failure
+Running --> Monitoring : Health Check
+Monitoring --> Healing : Failure Detected
+Healing --> Running : Remediated
+Healing --> Error : Unrecoverable
+Error --> [*]
+@enduml

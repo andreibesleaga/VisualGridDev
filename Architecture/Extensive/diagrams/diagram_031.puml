@@ -1,0 +1,39 @@
+@startuml
+title Microservices Integration Pattern
+
+package "VisualGridDev Platform" {
+    component "API Gateway" as Gateway
+    component "Service Discovery" as Discovery
+    component "Load Balancer" as LB
+    
+    package "Core Services" {
+        component "Flow Engine" as FlowEngine
+        component "Agent Manager" as AgentMgr
+        component "Protocol Router" as Router
+    }
+    
+    package "AI/ML Services" {
+        component "Model Server" as ModelServer
+        component "Training Service" as Training
+        component "Inference Engine" as Inference
+    }
+    
+    package "Data Services" {
+        component "Data Ingestion" as Ingestion
+        component "Stream Processor" as StreamProc
+        component "Storage Service" as Storage
+    }
+}
+
+Gateway -> Discovery: Service lookup
+Discovery -> LB: Service endpoints
+LB -> FlowEngine: Route requests
+FlowEngine -> Router: Protocol routing
+Router -> AgentMgr: Agent operations
+AgentMgr -> ModelServer: ML requests
+ModelServer -> Inference: Run inference
+Training -> Storage: Store models
+Ingestion -> StreamProc: Process streams
+StreamProc -> Storage: Store results
+
+@enduml

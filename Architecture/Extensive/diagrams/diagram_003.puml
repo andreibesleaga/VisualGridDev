@@ -1,0 +1,29 @@
+@startuml
+title A2A/MCP Communication Sequence
+
+participant "Agent A" as AgentA
+participant "Protocol Router" as Router
+participant "Mesh Network" as Mesh
+participant "Agent B" as AgentB
+participant "External System" as External
+
+== A2A Internal Communication ==
+AgentA -> Router: A2A message
+Router -> Router: Select optimal protocol
+Router -> Mesh: Route via libp2p
+Mesh -> AgentB: Deliver message
+AgentB -> AgentB: Process message
+AgentB -> Mesh: Send response
+Mesh -> Router: Route response
+Router -> AgentA: Deliver response
+
+== MCP External Communication ==
+AgentA -> Router: MCP request
+Router -> Router: Translate to MCP protocol
+Router -> External: MCP tool call
+External -> External: Execute operation
+External -> Router: MCP response
+Router -> Router: Translate response
+Router -> AgentA: Deliver result
+
+@enduml

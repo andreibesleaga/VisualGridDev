@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+
+title VisualGridDev Studio - Message Flow Sequence
+
+Person(user, "User")
+Container(studio, "Studio IDE")
+Container(router, "Protocol Router")
+Container(kafka, "Kafka")
+Container(agent, "AI Agent")
+Container(nodered, "Node-RED")
+Container(mapek, "MAPE-K")
+
+Rel(user, studio, "1. Create flow")
+Rel(studio, router, "2. Deploy flow")
+Rel(router, kafka, "3. Publish deployment event")
+Rel(kafka, agent, "4. Consume event")
+Rel(agent, nodered, "5. Execute flow")
+Rel(nodered, kafka, "6. Publish execution metrics")
+Rel(kafka, mapek, "7. Monitor health")
+Rel(mapek, router, "8. Trigger healing if needed")
+Rel(router, studio, "9. Update UI status")
+
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(dev, "Developer")
+Person(admin, "Admin")
+System_Boundary(visualgriddev, "VisualGridDev Platform") {
+  System(ide, "Visual IDE", "Web/VS Code")
+  System(runtime, "Flow Runtime", "Node/Edge/Cloud")
+  System(ai, "AI/ML Orchestrator", "LLM, ML, RAG")
+  System(mesh, "Mesh Network", "libp2p, MQTT, etc.")
+  System(monitor, "Monitoring Dashboard", "Real-time UI")
+}
+Rel(dev, ide, "Uses")
+Rel(admin, monitor, "Monitors")
+Rel(ide, runtime, "Deploys Flows")
+Rel(runtime, mesh, "Joins Mesh")
+Rel(runtime, ai, "Invokes AI/ML")
+Rel(runtime, monitor, "Reports Health")
+@enduml

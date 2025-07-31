@@ -1,0 +1,51 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Deployment.puml
+
+title VisualGridDev Studio - Deployment Architecture
+
+Deployment_Node(cloud, "Cloud Infrastructure", "AWS/Azure/GCP") {
+    Deployment_Node(k8s, "Kubernetes Cluster") {
+        Deployment_Node(ns1, "VisualGridDev-system", "Namespace") {
+            Container(istio, "Istio Service Mesh", "Traffic management, security")
+            Container(argocd, "ArgoCD", "GitOps continuous deployment")
+            Container(monitoring, "Monitoring Stack", "Prometheus, Grafana, Jaeger")
+        }
+        
+        Deployment_Node(ns2, "VisualGridDev-runtime", "Namespace") {
+            Container(studio, "Studio Pods", "React application")
+            Container(core, "Core Runtime Pods", "Node.js/TypeScript")
+            Container(agents, "Agent Pods", "AI agents")
+            Container(healing, "Self-Healing Pods", "MAPE-K controllers")
+        }
+        
+        Deployment_Node(ns3, "VisualGridDev-data", "Namespace") {
+            Container(kafka, "Kafka Cluster", "Strimzi operator")
+            Container(flink, "Flink Cluster", "Stream processing")
+            Container(databases, "Database Pods", "SQLite-AI, InfluxDB")
+        }
+    }
+    
+    Deployment_Node(managed, "Managed Services") {
+        Container(vectordb, "Vector Database", "Pinecone/Weaviate")
+        Container(storage, "Object Storage", "S3/Blob/GCS")
+        Container(registry, "Container Registry", "ECR/ACR/GCR")
+    }
+}
+
+Deployment_Node(edge, "Edge Devices", "IoT/Industrial") {
+    Container(edgecore, "Edge Runtime", "Lightweight Node.js")
+    Container(sqliteai, "SQLite-AI", "Local inference")
+    Container(sensors, "Sensor Nodes", "Data collection")
+}
+
+Deployment_Node(cicd, "CI/CD Infrastructure") {
+    Container(github, "GitHub Actions", "Build and test")
+    Container(gitops, "GitOps Repository", "Infrastructure as code")
+}
+
+Rel(edge, k8s, "Mesh networking", "libp2p/gossip")
+Rel(cicd, k8s, "Deploy via ArgoCD", "Git webhook")
+Rel(k8s, managed, "Consume services", "HTTPS/gRPC")
+Rel(monitoring, k8s, "Monitor all pods", "Prometheus")
+
+@enduml

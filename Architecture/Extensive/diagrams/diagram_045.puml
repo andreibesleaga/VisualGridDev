@@ -1,0 +1,16 @@
+@startuml
+node "Cloud" {
+  component "Kubernetes Cluster" {
+    component "AGCP Core"
+    component "API Gateway"
+    component "Monitoring Dashboard"
+  }
+}
+node "Edge Node" {
+  component "Self-Healing Agent"
+  component "Flow Runtime"
+}
+node "User Device" {
+  component "Visual IDE"
+}
+@enduml

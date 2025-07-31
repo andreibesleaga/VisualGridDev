@@ -1,0 +1,32 @@
+@startuml
+title Multi-Environment Promotion Pipeline
+
+package "Development" {
+    component "Dev Cluster" as DevCluster
+    component "Dev Tests" as DevTests
+}
+
+package "Staging" {
+    component "Staging Cluster" as StagingCluster
+    component "Integration Tests" as IntegrationTests
+    component "Performance Tests" as PerfTests
+}
+
+package "Production" {
+    component "Prod Cluster" as ProdCluster
+    component "Canary Deployment" as Canary
+    component "Blue-Green Deployment" as BlueGreen
+}
+
+DevCluster -> DevTests: Run unit tests
+DevTests -> StagingCluster: Promote to staging
+StagingCluster -> IntegrationTests: Run integration tests
+IntegrationTests -> PerfTests: Run performance tests
+PerfTests -> Canary: Deploy canary
+Canary -> BlueGreen: Full deployment
+BlueGreen -> ProdCluster: Switch traffic
+
+note right of Canary : 5% traffic to new version
+note right of BlueGreen : Zero-downtime deployment
+
+@enduml

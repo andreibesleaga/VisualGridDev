@@ -1,0 +1,57 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title VisualGridDev Studio - Container Architecture
+
+Person(user, "User")
+
+System_Boundary(VisualGridDev, "VisualGridDev Studio Platform") {
+    Container(studio, "VisualGridDev Studio IDE", "React/TypeScript", "Visual workflow designer with real-time monitoring")
+    Container(gateway, "API Gateway", "Kong/Istio", "Authentication, rate limiting, routing")
+    
+    Container_Boundary(core, "Core Runtime") {
+        Container(router, "Protocol Router", "Node.js/TypeScript", "Unified A2A/MCP message routing")
+        Container(nodered, "Node-RED Runtime", "Node.js", "Visual flow execution engine")
+        Container(agents, "AI Agents", "TypeScript", "A2A/MCP protocol handlers")
+    }
+    
+    Container_Boundary(streaming, "Event Streaming") {
+        Container(kafka, "Apache Kafka", "Scala/Java", "High-throughput event streaming")
+        Container(flink, "Apache Flink", "Java", "Real-time stream processing")
+        Container(redis, "Redis Streams", "C", "Low-latency message queuing")
+    }
+    
+    Container_Boundary(ai, "AI/ML Services") {
+        Container(mlapi, "ML API Gateway", "Python/FastAPI", "Model serving and orchestration")
+        Container(langchain, "LangChain Service", "Python", "LLM workflow orchestration")
+        Container(vectordb, "Vector Database", "Pinecone/Weaviate", "Embeddings and similarity search")
+    }
+    
+    Container_Boundary(data, "Data Layer") {
+        Container(sqliteai, "SQLite-AI", "C/Python", "Edge AI inference and storage")
+        Container(timeseries, "InfluxDB", "Go", "Time-series metrics and IoT data")
+        Container(datalake, "Data Lake", "Delta Lake", "Analytics and historical data")
+    }
+    
+    Container_Boundary(healing, "Self-Healing Layer") {
+        Container(mapek, "MAPE-K Controller", "Rust", "Monitor-Analyze-Plan-Execute-Knowledge loops")
+        Container(fitness, "Fitness Evaluator", "Python", "System health and performance evaluation")
+        Container(orchestrator, "Change Orchestrator", "Go", "Automated deployment and scaling")
+    }
+}
+
+Rel(user, studio, "Uses", "HTTPS/WebSocket")
+Rel(studio, gateway, "API calls", "HTTPS")
+Rel(gateway, router, "Routes messages", "gRPC/HTTP")
+Rel(router, agents, "A2A/MCP calls", "JSON-RPC/SSE")
+Rel(router, kafka, "Publishes events", "Kafka protocol")
+Rel(nodered, agents, "Flow execution", "A2A/MCP")
+Rel(agents, kafka, "Event streaming", "Kafka protocol")
+Rel(flink, kafka, "Stream processing", "Kafka protocol")
+Rel(mlapi, vectordb, "Vector queries", "HTTP/gRPC")
+Rel(nodered, sqliteai, "Edge inference", "SQL/HTTP")
+Rel(mapek, kafka, "Health events", "Kafka protocol")
+Rel(fitness, timeseries, "Metrics collection", "HTTP")
+Rel(orchestrator, nodered, "Flow deployment", "HTTP/gRPC")
+
+@enduml
