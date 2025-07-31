@@ -35,7 +35,9 @@ VisualGridDev is a next-generation, production-ready platform for universal AI a
 - `Architecture/Extensive/EMERGING_TECH_FUTUREPROOFING.md`: Future-proofing and tech watch
 - `Architecture/Requirements/Requirements.txt`, `Req/Final.txt`: Requirements and traceability matrix
 - `Architecture/Extensive/PRODUCTION_CHECKLIST.md`: Final production readiness checklist
-- `Architecture/Extensive/diagrams`: plantUML/SVG system diagrams
+- `Architecture/Extensive/diagrams`: plantUML/SVG - System Diagrams
+- `Architecture/Extensive/UI-mockups`: images/snapshots mockups of User Interfaces
+- `Architecture/Requirements/`: initial/modified requirements files
 - `Archive/`: Legacy and obsolete files
 
 ---
