@@ -69,3 +69,5 @@ VisualGridDev is a next-generation, production-ready platform for universal AI a
 - For future-proofing, see `EMERGING_TECH_FUTUREPROOFING.md`
 
 ---
+Architecture/Extensive/diagrams/diagram_065.svg
+[![Architecture/Extensive/diagrams/diagram_065.svg](https://github.com/andreibesleaga/VisualGridDev/blob/main/Architecture/Extensive/diagrams/diagram_065.svg)](https://github.com/andreibesleaga/VisualGridDev/blob/main/Architecture/Extensive/diagrams/diagram_065.svg)
