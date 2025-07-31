@@ -1,4 +1,4 @@
-# VisualGridDev: Universal Visual Language Programming (including AI agentic orchestration and grid mesh systems deployments)
+# VisualGridDev: Universal Visual Language Programming
 
 This work is licensed under a Creative Commons Attribution 4.0 International License. (CC BY-SA).
 
@@ -35,6 +35,7 @@ VisualGridDev is a next-generation, production-ready platform for universal AI a
 - `Architecture/Extensive/EMERGING_TECH_FUTUREPROOFING.md`: Future-proofing and tech watch
 - `Architecture/Requirements/Requirements.txt`, `Req/Final.txt`: Requirements and traceability matrix
 - `Architecture/Extensive/PRODUCTION_CHECKLIST.md`: Final production readiness checklist
+- `Architecture/Extensive/diagrams`: plantUML/SVG system diagrams
 - `Archive/`: Legacy and obsolete files
 
 ---
