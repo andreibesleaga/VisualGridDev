@@ -2,7 +2,7 @@
 
 **Version**: 1.0  
 **Date**: 2025-08-01  
-**Status**: Production Ready  
+**Status**: First draft
 
 ---
 
