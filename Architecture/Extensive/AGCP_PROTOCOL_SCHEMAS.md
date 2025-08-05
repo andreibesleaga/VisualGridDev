@@ -1,225 +1,116 @@
-# AGCP Protocol Schemas and Interfaces
+# AGCP Protocol Schemas and Interfaces (Simplified v2.0)
 
-**Version**: 1.0  
-**Date**: 2025-08-01  
-**Status**: Production Ready  
+**Version**: 2.0  
+**Date**: 2025-08-05  
+**Status**: DRAFT
 
 ---
 
-## 🔌 ** Protocol Interface Definitions**
+## 🔌 ** Protocol Interface Definitions
 
 ### 1. AGCP Core Protocol Schema
 
 ```typescript
-// AGCP Core Message Schema (JSON Schema compliant)
-interface AGCPMessageSchema {
-  $schema: "https://agcp.visualgriddev.org/schemas/v1/message.json";
-  type: "object";
-  required: ["header", "routing", "security", "payload", "metadata"];
-  properties: {
-    header: {
-      type: "object";
-      required: ["version", "messageId", "timestamp", "source", "destination", "messageType"];
-      properties: {
-        version: { type: "string", pattern: "^1\\.0$" };
-        messageId: { type: "string", format: "uuid" };
-        timestamp: { type: "number", minimum: 0 };
-        source: { $ref: "#/definitions/NodeIdentifier" };
-        destination: {
-          oneOf: [
-            { $ref: "#/definitions/NodeIdentifier" },
-            { type: "array", items: { $ref: "#/definitions/NodeIdentifier" } }
-          ]
-        };
-        priority: { type: "integer", minimum: 0, maximum: 5 };
-        messageType: { $ref: "#/definitions/MessageType" };
-        sequenceNumber: { type: "number", minimum: 0 };
-        retryCount: { type: "integer", minimum: 0, maximum: 10 };
-        ttl: { type: "number", minimum: 1, maximum: 86400 };
-      };
-    };
-    routing: {
-      type: "object";
-      required: ["protocol"];
-      properties: {
-        path: { 
-          type: "array", 
-          items: { $ref: "#/definitions/NodeIdentifier" },
-          maxItems: 100
-        };
-        nextHop: { $ref: "#/definitions/NodeIdentifier" };
-        protocol: { type: "string", minLength: 1 };
-        serviceDiscovery: { $ref: "#/definitions/ServiceDiscoveryInfo" };
-      };
-    };
-    security: {
-      type: "object";
-      required: ["encryption", "signature"];
-      properties: {
-        authToken: { type: "string", minLength: 1 };
-        encryption: { 
-          type: "string", 
-          enum: ["AES-256-GCM", "ChaCha20-Poly1305", "none"] 
-        };
-        signature: { type: "string", minLength: 1 };
-        permissions: { 
-          type: "array", 
-          items: { type: "string" },
-          uniqueItems: true
-        };
-      };
-    };
-    payload: {
-      type: "object";
-      required: ["contentType", "encoding", "size", "checksum", "data"];
-      properties: {
-        contentType: { type: "string", pattern: "^[a-zA-Z0-9][a-zA-Z0-9!#$&\\-\\^_]*\\/[a-zA-Z0-9][a-zA-Z0-9!#$&\\-\\^_]*$" };
-        encoding: { 
-          type: "string", 
-          enum: ["binary", "json", "protobuf", "messagepack", "avro"] 
-        };
-        compression: { 
-          type: "string", 
-          enum: ["none", "gzip", "lz4", "zstd", "brotli"] 
-        };
-        size: { type: "number", minimum: 0, maximum: 1073741824 }; // 1GB max
-        checksum: { type: "string", pattern: "^[a-fA-F0-9]{64}$" }; // SHA-256
-        data: {}; // Any type allowed
-      };
-    };
-    metadata: {
-      type: "object";
-      required: ["traceId", "spanId"];
-      properties: {
-        traceId: { type: "string", format: "uuid" };
-        spanId: { type: "string", format: "uuid" };
-        correlationId: { type: "string", format: "uuid" };
-        context: { type: "object" };
-        evolution: { $ref: "#/definitions/EvolutionMetadata" };
-      };
-    };
-  };
-  
-  definitions: {
-    NodeIdentifier: {
-      type: "object";
-      required: ["nodeId", "role"];
-      properties: {
-        nodeId: { type: "string", format: "uuid" };
-        role: { $ref: "#/definitions/AgentRole" };
-        capabilities: { 
-          type: "array", 
-          items: { type: "string" },
-          uniqueItems: true
-        };
-        location: {
-          type: "object";
-          properties: {
-            network: { type: "string", format: "ipv4" | "ipv6" | "hostname" };
-            region: { type: "string", minLength: 1 };
-            zone: { type: "string", minLength: 1 };
-          };
-        };
-        health: {
-          type: "object";
-          properties: {
-            status: { type: "string", enum: ["healthy", "degraded", "unhealthy"] };
-            lastSeen: { type: "number", minimum: 0 };
-            latency: { type: "number", minimum: 0 };
-            load: { type: "number", minimum: 0, maximum: 100 };
-          };
-        };
-      };
-    };
-    
-    AgentRole: {
-      type: "string";
-      enum: [
-        // Creative & Design (5)
-        "designer", "artist", "architect", "composer", "visualizer",
-        // Management & Coordination (6)
-        "manager", "supervisor", "orchestrator", "coordinator", "scheduler", "director",
-        // Operational & Processing (6)
-        "worker", "processor", "executor", "calculator", "validator", "optimizer",
-        // Intelligence & Analysis (6)
-        "agent", "analyst", "researcher", "advisor", "predictor", "detective",
-        // Communication & Translation (6)
-        "translator", "interpreter", "messenger", "bridge", "negotiator", "ambassador",
-        // Monitoring & Observation (6)
-        "observer", "sentinel", "monitor", "auditor", "inspector", "watchdog",
-        // Data & Collection (6)
-        "collector", "aggregator", "curator", "archivist", "indexer", "librarian",
-        // Specialized System (6)
-        "gateway", "adapter", "proxy", "router", "filter", "notifier",
-        // Security & Protection (6)
-        "guardian", "encryptor", "authenticator", "firewall", "shield", "detective_security",
-        // Learning & Adaptation (6)
-        "learner", "teacher", "evolver", "tuner", "experimenter", "innovator",
-        // Specialized Domain (5)
-        "scada_controller", "health_recorder", "financial_analyst", "web_crawler", "blockchain_validator",
-        // Additional System (12)
-        "load_balancer", "cache_manager", "queue_manager", "stream_processor", 
-        "batch_processor", "config_manager", "version_controller", "backup_manager",
-        "deployment_manager", "circuit_breaker", "rate_limiter", "health_checker"
-      ];
-    };
-    
-    MessageType: {
-      type: "string";
-      enum: [
-        "request", "response", "event", "command", "notification", 
-        "heartbeat", "discovery", "error", "ack", "data"
-      ];
-    };
-    
-    ServiceDiscoveryInfo: {
-      type: "object";
-      properties: {
-        serviceName: { type: "string", minLength: 1 };
-        serviceVersion: { type: "string", pattern: "^\\d+\\.\\d+\\.\\d+$" };
-        endpoint: { type: "string", format: "uri" };
-        healthEndpoint: { type: "string", format: "uri" };
-        capabilities: { 
-          type: "array", 
-          items: { type: "string" },
-          uniqueItems: true
-        };
-      };
-    };
-    
-    EvolutionMetadata: {
-      type: "object";
-      properties: {
-        protocolLearning: {
-          type: "object";
-          properties: {
-            detectedProtocol: { type: "string" };
-            confidence: { type: "number", minimum: 0, maximum: 1 };
-            inferredFormat: { type: "string" };
-            adaptationRequired: { type: "boolean" };
-          };
-        };
-        codeGeneration: {
-          type: "object";
-          properties: {
-            generatedNodeType: { type: "string" };
-            llmProvider: { type: "string" };
-            generationTimestamp: { type: "number" };
-            validationStatus: { type: "string", enum: ["pending", "passed", "failed"] };
-          };
-        };
-        pluginEvolution: {
-          type: "object";
-          properties: {
-            pluginId: { type: "string" };
-            version: { type: "string" };
-            hotReloadStatus: { type: "string", enum: ["pending", "loaded", "failed"] };
-          };
-        };
-      };
-    };
-  };
+// Simplified AGCP Message (Essential fields only)
+interface AGCPMessage {
+  id: string;                    // UUID v4
+  version: "2.0";               // Protocol version
+  timestamp: number;            // Unix timestamp
+  from: string;                 // Source node ID
+  to: string | string[];        // Destination(s)
+  type: MessageType;            // Message type
+  auth?: string;                // Optional auth token
+  signature?: string;           // Optional signature
+  data: any;                    // Message payload
+  encoding?: "json" | "binary"; // Default: json
+  trace?: string;               // Optional trace ID
+  context?: Record<string, any>; // Optional context
 }
+
+type MessageType = 
+  | "request" 
+  | "response" 
+  | "event" 
+  | "command" 
+  | "notification" 
+  | "heartbeat";
+
+// Reduced agent roles (20 essential)
+type AgentRole = 
+  | "agent" | "manager" | "worker" | "gateway"
+  | "processor" | "validator" | "optimizer" | "executor"
+  | "translator" | "bridge" | "messenger" | "router"
+  | "monitor" | "observer" | "auditor" | "health_checker"
+  | "collector" | "aggregator" | "storage" | "indexer";
+
+// ---
+// Minimal Protocol Bridge Interface
+interface ProtocolBridge {
+  id: string;
+  name: string;
+  sourceProtocol: string;
+  targetProtocol: "AGCP";
+  initialize(config: any): Promise<void>;
+  translateToAGCP(message: any): Promise<AGCPMessage>;
+  translateFromAGCP(message: AGCPMessage): Promise<any>;
+  isHealthy(): boolean;
+  destroy(): Promise<void>;
+}
+
+// Example: A2A Bridge (Simplified)
+interface A2ABridge extends ProtocolBridge {
+  sourceProtocol: "A2A";
+  translateToAGCP(a2aMessage: A2AMessage): Promise<AGCPMessage>;
+  translateFromAGCP(agcpMessage: AGCPMessage): Promise<A2AMessage>;
+}
+
+// Example: MCP Bridge (Simplified)
+interface MCPBridge extends ProtocolBridge {
+  sourceProtocol: "MCP";
+  translateToAGCP(mcpMessage: MCPMessage): Promise<AGCPMessage>;
+  translateFromAGCP(agcpMessage: AGCPMessage): Promise<MCPMessage>;
+}
+
+// Example: ANP Bridge (Simplified)
+interface ANPBridge extends ProtocolBridge {
+  sourceProtocol: "ANP";
+  translateToAGCP(anpMessage: ANPMessage): Promise<AGCPMessage>;
+  translateFromAGCP(agcpMessage: AGCPMessage): Promise<ANPMessage>;
+}
+
+// Example: ACP Bridge (Simplified)
+interface ACPBridge extends ProtocolBridge {
+  sourceProtocol: "ACP";
+  translateToAGCP(acpMessage: ACPMessage): Promise<AGCPMessage>;
+  translateFromAGCP(agcpMessage: AGCPMessage): Promise<ACPMessage>;
+}
+
+// Minimal Bridge Registry
+class SimpleBridgeRegistry {
+  private bridges = new Map<string, ProtocolBridge>();
+  register(bridge: ProtocolBridge): void {
+    this.bridges.set(bridge.sourceProtocol, bridge);
+  }
+  getBridge(protocol: string): ProtocolBridge | null {
+    return this.bridges.get(protocol) || null;
+  }
+  getProtocols(): string[] {
+    return Array.from(this.bridges.keys());
+  }
+  getHealthStatus(): Record<string, boolean> {
+    const status: Record<string, boolean> = {};
+    for (const [protocol, bridge] of this.bridges) {
+      status[protocol] = bridge.isHealthy();
+    }
+    return status;
+  }
+}
+
+// Migration Notes:
+// - Legacy AGCP messages can be mapped to the simplified schema (see migration section in AGCP_SIMPLIFIED_PROTOCOL_proposed.md)
+// - All bridges must implement the minimal interface for compatibility
+// - Registry/factory logic is now a simple protocol→bridge map
+// - Full compatibility with A2A, MCP, ANP, ACP, and legacy protocols is maintained
 ```
 
 ### 2. Protocol Bridge Interface Definitions
@@ -227,34 +118,15 @@ interface AGCPMessageSchema {
 ```typescript
 // Universal Protocol Bridge Interface
 interface ProtocolBridge {
-  bridgeId: string;
+  id: string;
   name: string;
-  version: string;
   sourceProtocol: string;
-  targetProtocol: string;
-  bidirectional: boolean;
-  
-  // Bridge lifecycle
-  initialize(config: BridgeConfiguration): Promise<InitializationResult>;
-  start(): Promise<void>;
-  stop(): Promise<void>;
-  pause(): Promise<void>;
-  resume(): Promise<void>;
-  shutdown(): Promise<void>;
-  
-  // Message translation
-  translateToAGCP(sourceMessage: any): Promise<AGCPMessage>;
-  translateFromAGCP(agcpMessage: AGCPMessage): Promise<any>;
-  
-  // Health and monitoring
-  getHealth(): HealthStatus;
-  getMetrics(): BridgeMetrics;
-  getConfiguration(): BridgeConfiguration;
-  updateConfiguration(config: Partial<BridgeConfiguration>): Promise<void>;
-  
-  // Error handling
-  handleError(error: BridgeError): Promise<ErrorHandlingResult>;
-  retry(operation: string, maxRetries: number): Promise<any>;
+  targetProtocol: "AGCP";
+  initialize(config: any): Promise<void>;
+  translateToAGCP(message: any): Promise<AGCPMessage>;
+  translateFromAGCP(message: AGCPMessage): Promise<any>;
+  isHealthy(): boolean;
+  destroy(): Promise<void>;
 }
 
 // HTTP to AGCP Bridge
@@ -415,6 +287,81 @@ interface KafkaToAGCPBridge extends ProtocolBridge {
     };
   };
 }
+
+// MCP Protocol Bridge (Independent)
+interface MCPToAGCPBridge extends ProtocolBridge {
+  sourceProtocol: "MCP";
+  targetProtocol: "AGCP";
+  
+  // MCP specific methods
+  handleMCPMessage(message: MCPMessage): Promise<AGCPMessage>;
+  handleAGCPMessage(message: AGCPMessage): Promise<MCPMessage>;
+  
+  // MCP features
+  contextManagement: MCPContextManager;
+  toolIntegration: MCPToolManager;
+  resourceAccess: MCPResourceManager;
+  
+  // Compatibility layer
+  mcpCompatibility: {
+    version: string;
+    supportedFeatures: string[];
+    limitations: string[];
+    migrationPath: MigrationPathDefinition;
+  };
+}
+
+// ANP Protocol Bridge (Agent Network Protocol)
+interface ANPToAGCPBridge extends ProtocolBridge {
+  sourceProtocol: "ANP";
+  targetProtocol: "AGCP";
+
+  // ANP-specific methods
+  handleANPMessage(message: ANPMessage): Promise<AGCPMessage>;
+  handleAGCPMessage(message: AGCPMessage): Promise<ANPMessage>;
+
+  // ANP features
+  protocolNegotiation: ANPProtocolNegotiation;
+  codeGeneration: ANPCodeGeneration;
+  testCaseNegotiation: ANPTestCaseNegotiation;
+  errorFixNegotiation: ANPErrorFixNegotiation;
+  naturalLanguageNegotiation?: ANPNaturalLanguageNegotiation;
+
+  // Compatibility layer
+  anpCompatibility: {
+    version: string;
+    supportedCapabilities: string[];
+    limitations: string[];
+    migrationPath: MigrationPathDefinition;
+  };
+}
+
+// ACP Protocol Bridge (Agent Communication Protocol)
+interface ACPToAGCPBridge extends ProtocolBridge {
+  sourceProtocol: "ACP";
+  targetProtocol: "AGCP";
+
+  // ACP-specific methods
+  handleACPMessage(message: ACPMessage): Promise<AGCPMessage>;
+  handleAGCPMessage(message: AGCPMessage): Promise<ACPMessage>;
+
+  // ACP features
+  agentDiscovery: ACPAgentDiscovery;
+  messageRouting: ACPMessageRouting;
+  multimodalSupport: ACPMultimodalSupport;
+  asyncSupport: boolean;
+  syncSupport: boolean;
+  sseSupport: boolean;
+  restEndpoints: ACPRestEndpoints;
+
+  // Compatibility layer
+  acpCompatibility: {
+    version: string;
+    supportedFeatures: string[];
+    limitations: string[];
+    migrationPath: MigrationPathDefinition;
+  };
+}
 ```
 
 ### 3. A2A and MCP Bridge Interfaces
@@ -459,6 +406,58 @@ interface MCPToAGCPBridge extends ProtocolBridge {
   
   // Compatibility layer
   mcpCompatibility: {
+    version: string;
+    supportedFeatures: string[];
+    limitations: string[];
+    migrationPath: MigrationPathDefinition;
+  };
+}
+
+// ANP Protocol Bridge (Agent Network Protocol)
+interface ANPToAGCPBridge extends ProtocolBridge {
+  sourceProtocol: "ANP";
+  targetProtocol: "AGCP";
+
+  // ANP-specific methods
+  handleANPMessage(message: ANPMessage): Promise<AGCPMessage>;
+  handleAGCPMessage(message: AGCPMessage): Promise<ANPMessage>;
+
+  // ANP features
+  protocolNegotiation: ANPProtocolNegotiation;
+  codeGeneration: ANPCodeGeneration;
+  testCaseNegotiation: ANPTestCaseNegotiation;
+  errorFixNegotiation: ANPErrorFixNegotiation;
+  naturalLanguageNegotiation?: ANPNaturalLanguageNegotiation;
+
+  // Compatibility layer
+  anpCompatibility: {
+    version: string;
+    supportedCapabilities: string[];
+    limitations: string[];
+    migrationPath: MigrationPathDefinition;
+  };
+}
+
+// ACP Protocol Bridge (Agent Communication Protocol)
+interface ACPToAGCPBridge extends ProtocolBridge {
+  sourceProtocol: "ACP";
+  targetProtocol: "AGCP";
+
+  // ACP-specific methods
+  handleACPMessage(message: ACPMessage): Promise<AGCPMessage>;
+  handleAGCPMessage(message: AGCPMessage): Promise<ACPMessage>;
+
+  // ACP features
+  agentDiscovery: ACPAgentDiscovery;
+  messageRouting: ACPMessageRouting;
+  multimodalSupport: ACPMultimodalSupport;
+  asyncSupport: boolean;
+  syncSupport: boolean;
+  sseSupport: boolean;
+  restEndpoints: ACPRestEndpoints;
+
+  // Compatibility layer
+  acpCompatibility: {
     version: string;
     supportedFeatures: string[];
     limitations: string[];

@@ -52,7 +52,7 @@ Based on IEEE/ACM research in:
 - Multi-tenant workspace management
 
 ### 3.2 Protocol Unification Layer
-**Purpose**: Unified message routing across A2A, MCP, and streaming protocols
+**Purpose**: Unified message routing across A2A, MCP, ANP, ACP, and streaming protocols
 **Technology**: Node.js/TypeScript/Fastify, with protocol adapters
 **Features**:
 - Dynamic protocol selection based on fitness metrics

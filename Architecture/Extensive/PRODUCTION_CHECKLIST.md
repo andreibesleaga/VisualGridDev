@@ -9,8 +9,8 @@
 ## 2. Architecture & Code
 - [] Modular, extensible, and future-proofed architecture
 - [] Self-healing, hot-loadable plugin system
-- [] Protocol schemas and interfaces complete
-- [] All agent roles and flows defined
+- [] Protocol schemas and interfaces complete (A2A, MCP, ANP, ACP, HTTP+)
+- [] All agent roles and flows defined (70+ roles + AI compliance supervisors)
 
 ## 3. Security & Compliance
 - [] mTLS, RBAC, signed plugins, and adaptive security implemented

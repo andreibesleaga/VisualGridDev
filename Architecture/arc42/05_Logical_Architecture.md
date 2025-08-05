@@ -2,7 +2,7 @@
 
 - VisualGridDev Studio (IDE)
 - Flow Runtime (Node-RED)
-- A2A/MCP Protocol Router
+- A2A/MCP/ANP/ACP Protocol Router
 - MAPE-K Feedback Loops
 - Event Bus (Kafka)
 - AI Orchestrators (LangChain)

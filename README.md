@@ -2,8 +2,8 @@
 
 This work is licensed under a Creative Commons Attribution 4.0 International License. (CC BY-SA).
 
-**Version:** 5.0 (Draft)
-**Date:** 2025-08-01
+**Version:** 5.0
+**Date:** 2025-08-05
 
 ---
 
@@ -14,7 +14,7 @@ VisualGridDev is a next-generation, production-ready platform for universal AI a
 
 ## 🏗️ Architecture Highlights
 - **Visual IDE:** Web-based, event-driven, LabVIEW-style programming (Node-RED, React, Monaco)
-- **Universal Protocol:** AGCP protocol with 40+ bridges (A2A, MCP, HTTP, MQTT, gRPC, etc.)
+- **Universal Protocol:** AGCP protocol with 40+ bridges (A2A, MCP, ANP, ACP, HTTP, MQTT, gRPC, etc.)
 - **Self-Healing:** MAPE-K feedback loops, adaptive security, and auto-remediation
 - **Mesh Deployment:** Cloud, edge, and p2p with Kubernetes, Docker, and GitOps
 - **Extensibility:** Hot-loadable plugins, schema importers, and manifest-based extension system
@@ -30,10 +30,10 @@ VisualGridDev is a next-generation, production-ready platform for universal AI a
 - `Architecture/Extensive/FINAL_UNIFIED_ARCHITECTURE_v5.0.md`: Master architecture specification
 - `Architecture/Extensive/AGCP_PROTOCOL_SCHEMAS.md`: Protocol/interface schemas
 - `Architecture/Extensive/DEPLOYMENT_ARCHITECTURE.md`: Deployment strategies (K8s, Docker, CI/CD)
-- `Architecture/Extensive/PLANTUML_DIAGRAMS.md`, `C4_DIAGRAMS.md`, `UI_MOCKUPS.md`: All diagrams and UI mockups
+- `Architecture/Extensive/PLANTUML_DIAGRAMS.md`, `C4_DIAGRAMS.md`, `UI-mockups/UI_MOCKUPS.md`: All diagrams and UI mockups
 - `Architecture/Extensive/AI_COMPLIANCE_REGULATIONS.md`, `AI_COMPLIANCE_MAPPING_MATRIX.md`, `AI_COMPLIANCE_MATRIX_DETAILED.md`: Compliance and audit mapping
 - `Architecture/Extensive/EMERGING_TECH_FUTUREPROOFING.md`: Future-proofing and tech watch
-- `Architecture/Requirements/Requirements.txt`, `Req/Final.txt`: Requirements and traceability matrix
+- `Architecture/Requirements/Requirements.md`: Requirements and traceability matrix
 - `Architecture/Extensive/PRODUCTION_CHECKLIST.md`: Final production readiness checklist
 - `Architecture/Extensive/diagrams`: plantUML/SVG - System Diagrams
 - `Architecture/Extensive/UI-mockups`: images/snapshots mockups of User Interfaces

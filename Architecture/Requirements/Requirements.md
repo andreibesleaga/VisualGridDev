@@ -8,7 +8,7 @@ Requirements:
 - Compatibility and connection with legacy frameworks, languages and systems.
 
 1. **Runtime Strategy**: Node.js/TypeScript core with Python AI/ML (LangChains/LangGraph/Models/etc.) + native extensions for performance-critical components
-2. **Protocol Strategy**: Native AGCP unified protocol with A2A/MCP compatibility and other AI RAG systems + multi-protocol adapters
+2. **Protocol Strategy**: Native AGCP unified protocol with A2A/MCP/ANP/ACP compatibility and other AI RAG systems + multi-protocol adapters
 3. **Discovery Strategy**: Hybrid decentralized with local cache and fallback mechanisms
 4. **Data Consistency**: Configurable per data type and system requirements
 5. **Security Strategy**: Zero-trust mTLS core + AI adaptive security per deployment
@@ -37,7 +37,7 @@ Here is a comprehensive traceability matrix, cross-referencing all requirements 
 | Adaptive security, self-evolution, plugin system                                     | ✅                | ✅                | ✅         | ✅                    | Security      | ✅     |
 | Legacy frameworks/languages/systems compatibility                                    | ✅                | ✅                | ✅         | ✅                    | arc42, C4     | ✅     |
 | Node.js/TypeScript core, Python AI/ML, native perf                                   | ✅                | N/A              | N/A        | ✅                    | Tech Stack    | ✅     |
-| AGCP protocol, A2A/MCP, multi-protocol adapters                                      | ✅                | ✅                | ✅         | ✅                    | Protocols     | ✅     |
+| AGCP protocol, A2A/MCP/ANP/ACP, multi-protocol adapters                             | ✅                | ✅                | ✅         | ✅                    | Protocols     | ✅     |
 | Hybrid decentralized discovery, fallback, local cache                                | ✅                | N/A              | ✅         | ✅                    | Logical       | ✅     |
 | Configurable data consistency                                                        | ✅                | N/A              | ✅         | ✅                    | Logical       | ✅     |
 | Zero-trust mTLS, AI adaptive security                                                | ✅                | ✅                | ✅         | ✅                    | Security      | ✅     |
@@ -62,7 +62,7 @@ Here is a comprehensive traceability matrix, cross-referencing all requirements 
 - Adaptive security, self-evolution, plugin/hot-loadable extension system
 - Legacy and emerging protocol compatibility (finance, health, blockchain, industrial, etc.)
 - Role-based agent system (all listed roles, extensible)
-- Universal protocol bridge (AGCP, A2A, MCP, HTTP, MQTT, etc.)
+- Universal protocol bridge (AGCP, A2A, MCP, ANP, ACP, HTTP, MQTT, etc.)
 - Hybrid decentralized discovery and fallback
 - Configurable data consistency and reliability
 - Zero-trust security, mTLS, compliance hooks
