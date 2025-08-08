@@ -8,7 +8,7 @@ This work is licensed under a Creative Commons Attribution 4.0 International Lic
 ---
 
 ## 🚀 Overview
-VisualGridDev is a next-generation, production-ready platform for universal AI agent orchestration, visual programming, and mesh deployment across cloud, edge, and hybrid environments. It unifies protocol compatibility, self-healing, extensibility, and compliance for enterprise-grade AI systems. This repository centralizes system architecture and protocols proposals.
+VisualGridDev is a next-generation, production-ready platform for universal AI agent orchestration and hardware/protocols integrations visual programming, and mesh deployment across cloud, edge, and hybrid environments. It unifies protocol compatibility, self-healing, extensibility, and compliance for enterprise-grade AI systems. This repository centralizes system architecture and protocols proposals.
 
 ---
 
