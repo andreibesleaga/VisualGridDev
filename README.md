@@ -18,7 +18,7 @@ VisualGridDev is a next-generation Collaborative Visual Language Programming Pla
 - **Self-Healing:** MAPE-K feedback loops, adaptive security, and auto-remediation
 - **Mesh Deployment:** Cloud, edge, and p2p with Kubernetes, Docker, and GitOps
 - **Extensibility:** Hot-loadable plugins, schema importers, and manifest-based extension system
-- **Agent Roles:** 70+ agent roles across 11 categories, fully documented
+- **Agent Roles:** A set of 20 essential agent roles, fully documented
 - **Monitoring:** Real-time dashboards, observability, and audit logs
 - **Compliance:** Explicit mapping to EU AI Act, NIST AI RMF, IEEE CertifAIEd, GDPR, SOC2, ISO 27001, HIPAA
 - **Future-Proof:** Quantum, edge AI, 6G, and emerging tech ready
@@ -27,10 +27,10 @@ VisualGridDev is a next-generation Collaborative Visual Language Programming Pla
 
 ## 📂 Key Files & Structure
 - `Architecture/arc42/`: Modular architecture summary best-practice documentation (views, NFRs, security, analysis)
-- `Architecture/Extensive/FINAL_UNIFIED_ARCHITECTURE_v5.0.md`: Master architecture specification
+- `Architecture/Extensive/UNIFIED_ARCHITECTURE_v5.1.md`: Master architecture specification
 - `Architecture/Extensive/AGCP_PROTOCOL_SCHEMAS.md`: Protocol/interface schemas
 - `Architecture/Extensive/DEPLOYMENT_ARCHITECTURE.md`: Deployment strategies (K8s, Docker, CI/CD)
-- `Architecture/Extensive/PLANTUML_DIAGRAMS.md`, `C4_DIAGRAMS.md`, `UI-mockups/UI_MOCKUPS.md`: All diagrams and UI mockups
+- `Architecture/Extensive/C4_DIAGRAMS.md`, `UI-mockups/UI_MOCKUPS.md`: All diagrams and UI mockups
 - `Architecture/Extensive/AI_COMPLIANCE_REGULATIONS.md`, `AI_COMPLIANCE_MAPPING_MATRIX.md`, `AI_COMPLIANCE_MATRIX_DETAILED.md`: Compliance and audit mapping
 - `Architecture/Extensive/EMERGING_TECH_FUTUREPROOFING.md`: Future-proofing and tech watch
 - `Architecture/Requirements/Requirements.md`: Requirements and traceability matrix
