@@ -8,7 +8,7 @@ This work is licensed under a Creative Commons Attribution 4.0 International Lic
 ---
 
 ## 🚀 Overview
-VisualGridDev is a next-generation Collaborative Visual Language Programming Platform System, for universal AI agent/protocol orchestration and hardware/protocols integrations, which deploys distributed mesh networks across clouds, edge, and hybrid environments, thought of to unify the best from the worlds of existing high-performance systems architectures, RPA tools, and new paradigms of "AI Engineering" world. It unifies protocol compatibility (backwards protocols compatible and adaptive to future protocols implementations), self-healing, extensibility, and compliance for enterprise-grade systems. This repository centralizes system architecture and protocols proposals for first variants in progress drafts.
+VisualGridDev is a draft proposed next-generation Collaborative Visual Language Programming Platform System, for universal AI agent/protocol orchestration and hardware/protocols integrations, which deploys distributed mesh networks across clouds, edge, and hybrid environments, thought of to unify the best from the worlds of existing high-performance systems architectures, RPA tools, and new paradigms of "AI Engineering" world. It unifies protocol compatibility (backwards protocols compatible and adaptive to future protocols implementations), self-healing, extensibility, and compliance for enterprise-grade systems. This repository centralizes system architecture and protocols proposals for first variants drafts.
 
 ---
 
