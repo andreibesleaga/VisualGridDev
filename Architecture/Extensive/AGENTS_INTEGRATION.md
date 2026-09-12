@@ -1,5 +1,12 @@
 # AI A2A Integration Guide for VisualGridDev Studio
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 ## Overview
 
 VisualGridDev Studio can integrate the official A2A SDK (or the proven optimized Artinet SDK (@artinet/sdk)) as its core agent communication layer, extending it with Node-RED flow capabilities and distributed mesh networking. This document outlines the integration strategy based on the architecture patterns.
@@ -7,6 +14,7 @@ VisualGridDev Studio can integrate the official A2A SDK (or the proven optimized
 ## Core Concepts Adopted
 
 ### 1. Agent2Agent (A2A) Protocol
+
 - **JSON-RPC over HTTP**: Standard request/response pattern
 - **Server-Sent Events (SSE)**: Real-time streaming updates
 - **AgentCard**: Agent discovery and capability advertisement
@@ -15,6 +23,7 @@ VisualGridDev Studio can integrate the official A2A SDK (or the proven optimized
 ### 2. Key SDK Components
 
 #### A2AServer (ExpressServer)
+
 ```typescript
 import { A2AServer, AgentEngine, ExecutionContext, FileStore } from '@artinet/sdk';
 
@@ -59,6 +68,7 @@ class VisualGridDevServer extends A2AServer {
 ```
 
 #### A2AClient for Inter-Agent Communication
+
 ```typescript
 import { A2AClient, Message } from '@artinet/sdk';
 
@@ -83,6 +93,7 @@ class VisualGridDevMeshClient {
 ```
 
 ### 3. AgentCard Integration
+
 ```typescript
 interface VisualGridDevAgentCard extends AgentCard {
   name: string;
@@ -108,6 +119,7 @@ interface VisualGridDevAgentCard extends AgentCard {
 ```
 
 ### 4. TaskStore Integration with Distributed State
+
 ```typescript
 import { TaskStore, Task } from '@artinet/sdk';
 
@@ -146,6 +158,7 @@ class DistributedTaskStore implements TaskStore {
 ## Node-RED Integration Pattern
 
 ### 1. AI-Aware Node-RED Nodes
+
 ```typescript
 // Custom Node-RED node that wraps A2A communication
 module.exports = function(RED) {
@@ -183,6 +196,7 @@ module.exports = function(RED) {
 ```
 
 ### 2. Flow-to-Agent Bridge
+
 ```typescript
 class FlowToAgentBridge {
   private server: VisualGridDevServer;
@@ -226,6 +240,7 @@ class FlowToAgentBridge {
 ## Mesh Network Integration
 
 ### 1. Agent Discovery via libp2p + AgentCard
+
 ```typescript
 import { createLibp2p } from 'libp2p';
 import { A2AClient } from '@artinet/sdk';
@@ -259,6 +274,7 @@ class VisualGridDevMeshDiscovery {
 ```
 
 ### 2. Distributed Flow Execution
+
 ```typescript
 class DistributedFlowExecutor {
   private meshClient: VisualGridDevMeshClient;
@@ -289,6 +305,7 @@ class DistributedFlowExecutor {
 ## MCP Integration (Model Context Protocol) - Universal External Communication
 
 ### 1. MCP Server Integration (Exposing VisualGridDev to External Systems)
+
 ```typescript
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -370,6 +387,7 @@ class VisualGridDevMCPServer {
 ```
 
 ### 2. MCP Client Integration (Connecting to External Systems)
+
 ```typescript
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport, SSEClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
@@ -435,6 +453,7 @@ class VisualGridDevMCPClientManager {
 ```
 
 ### 3. MCP Node-RED Integration
+
 ```typescript
 // Universal MCP Node for Node-RED
 module.exports = function(RED) {
@@ -487,6 +506,7 @@ module.exports = function(RED) {
 ### 4. External System Integration Examples
 
 #### Database Systems via MCP
+
 ```typescript
 // PostgreSQL MCP Server Integration
 const postgresConfig: MCPServerConfig = {
@@ -503,6 +523,7 @@ const dbResult = await mcpManager.callExternalTool('postgres-main', 'query', {
 ```
 
 #### File System via MCP
+
 ```typescript
 // File System MCP Server Integration
 const filesystemConfig: MCPServerConfig = {
@@ -517,6 +538,7 @@ const fileContent = await mcpManager.getExternalResource('filesystem', 'file:///
 ```
 
 #### LLM Services via MCP
+
 ```typescript
 // Claude/OpenAI MCP Integration
 const claudeConfig: MCPServerConfig = {
@@ -534,6 +556,7 @@ const aiResponse = await mcpManager.callExternalTool('claude-ai', 'complete', {
 ```
 
 #### Git Repository via MCP
+
 ```typescript
 // Git MCP Server Integration
 const gitConfig: MCPServerConfig = {
@@ -553,6 +576,7 @@ const commitInfo = await mcpManager.callExternalTool('git-repo', 'log', {
 ## Implementation Strategy
 
 ### Phase 1: Core A2A + MCP Integration
+
 1. **Wrap A2A/Artinet SDK**: Create VisualGridDevServer extending A2AServer/A2AClient
 2. **MCP Client Manager**: Universal external system connectivity
 3. **Agent Registry**: Implement distributed AgentCard discovery
@@ -560,6 +584,7 @@ const commitInfo = await mcpManager.callExternalTool('git-repo', 'log', {
 5. **TaskStore**: Implement distributed task storage with Raft
 
 ### Phase 2: Advanced Integration
+
 1. **Mesh Communication**: libp2p + A2A protocol for internal agents
 2. **MCP Server**: Expose VisualGridDev flows as MCP tools/resources/prompts
 3. **Universal MCP Nodes**: Node-RED nodes for all external systems
@@ -567,6 +592,7 @@ const commitInfo = await mcpManager.callExternalTool('git-repo', 'log', {
 5. **Visual Designer**: React frontend with A2A + MCP integration
 
 ### Phase 3: Production Features
+
 1. **Self-Healing**: MAPE-K loops with A2A + MCP health checks
 2. **Load Balancing**: Distribute flows across mesh agents
 3. **Security**: mTLS + RBAC for A2A + MCP communications

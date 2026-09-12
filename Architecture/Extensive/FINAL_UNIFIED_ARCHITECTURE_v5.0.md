@@ -1,26 +1,45 @@
 # VisualGridDev: Final Unified Architecture Specification v5.0
 
-**Version**: 5.0
-**Date**: 2025-08-05  
-**Status**: FINAL SPECIFICATION FOR IMPLEMENTATION  DRAFT
-**Supersedes**: ALL previous versions (v1.0, v2.0, v3.0, v4.0)  
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
+**Version**: 5.0-draft
+**Date**: 2025-08-05
 
 ---
 
 ## 🎯 **Executive Summary**
 
-VisualGridDev is a **Universal AI Agent Orchestration Platform** that achieves 100% protocol compatibility across all digital systems through a unified visual programming interface with **evolutionary self-healing capabilities**. This v5.0 specification resolves ALL architectural conflicts, provides complete protocol schemas, and delivers a production-ready architecture.
+VisualGridDev proposes a **Universal AI Agent Orchestration Platform**: a unified
+visual programming interface intended to interoperate with many digital systems
+through the Agentic Grid Communication Protocol (AGCP). This v5.0-draft
+specification describes the proposed protocol schemas and the questions they
+leave open. **It has not been implemented.**
 
-### **Key Achievements in v5.0**
+### **What this revision actually contains**
 
-✅ **Priority Alignment** - Corrected priority order per requirements (Web→AI/ML→IoT→Health→SCADA)  
-✅ **AGCP Independence** - Fully independent protocol with universal bridge compatibility  
-✅ **Complete Role System** - 70+ agent roles organized in 11 categories  
-✅ **Self-Evolution Mechanisms** - ML-powered protocol inference + LLM code generation  
-✅ **Visual IDE Integration** - Web-based IDE with Visual Studio integration pathway  
-✅ **Zero Architectural Conflicts** - All inconsistencies resolved  
-✅ **Production Deployment** - Complete deployment architectures for all environments  
-✅ **Protocol Schemas** - Complete interfaces and schemas for all protocols  
+An earlier revision of this section listed "key achievements". They were not
+achievements; they were design intentions, and several were contradicted by other
+documents in the same repository. This table is the honest version.
+
+| Area | Position in this revision |
+|---|---|
+| Protocol | One envelope is proposed (AGCP). Scope is unresolved; see [ADR-0003](../../docs/adr/0003-core-and-extended-profiles.md) |
+| Protocol support | **Zero bridges implemented or fixture-tested.** A bridge may not be claimed as supported until it passes stored fixtures; see [CONFORMANCE.md](../../CONFORMANCE.md) `CON-MUSTNOT-003` |
+| Agent roles | 70+ names are enumerated, but three contradictory counts coexist in this repository; reduction is proposed in [ADR-0005](../../docs/adr/0005-agent-role-primitives.md) |
+| Self-evolution | Protocol inference and generated translators are proposed and **must** be sandboxed, human-promoted, and bounded by an enumerated failure model; see [ADR-0004](../../docs/adr/0004-self-evolution-sandboxing.md) |
+| Visual IDE | Interface concept only; see `UI-mockups/` |
+| Deployment | Proposed topology only. No manifests, Helm charts, or pipelines exist; see [DEPLOYMENT_ARCHITECTURE.md](DEPLOYMENT_ARCHITECTURE.md) |
+| Schemas | Draft. Machine-readable versions are under `Architecture/Schemas/` |
+| Compliance | Mapping analysis only. Not certification and not legal advice |
+
+"All inconsistencies resolved", "Complete interfaces and schemas for all
+protocols", and "Production Deployment" were each false, which is why they are
+gone.  
 
 ---
 
@@ -29,12 +48,14 @@ VisualGridDev is a **Universal AI Agent Orchestration Platform** that achieves 1
 ### 1.1 Corrected Priority System (Per Requirements)
 
 **Priority 1: Web/Internet Systems** (99.9% API compatibility)
+
 - HTTP/3, WebSocket, gRPC, GraphQL, OAuth2, OpenID Connect
 - REST APIs, JSON-RPC, XML-RPC, SOAP
 - Cloud APIs: AWS, Azure, GCP, multi-cloud integration
 - WebRTC, Server-Sent Events, WebAssembly
 
 **Priority 2: AI/ML, Agents, Agentic AI, RAG Systems** (Real-time inference)
+
 - OpenAI GPT-4, Anthropic Claude, Google Gemini, Open-source LLMs
 - TensorFlow, PyTorch, JAX, ONNX Runtime, model serving
 - Vector databases: Pinecone, Weaviate, Qdrant, Chroma
@@ -42,17 +63,20 @@ VisualGridDev is a **Universal AI Agent Orchestration Platform** that achieves 1
 - Model Context Protocol (MCP) v1.0, OpenAI function calling
 
 **Priority 3: IoT/Edge Devices and Systems** (<5ms local latency)
+
 - MQTT 5.0, CoAP, AMQP, DDS for messaging
 - LoRaWAN, NB-IoT, Thread, Matter, Zigbee
 - Edge AI: TensorFlow Lite, ONNX Runtime, OpenVINO
 - Device management: LWM2M, TR-069, OMA-DM
 
 **Priority 4: Health Systems** (HL7 FHIR compliance)
+
 - HL7 FHIR R4/R5, HL7 v2.x, HL7 CDA, DICOM
 - Medical device protocols: IEEE 11073, Continua Alliance
 - EMR integration: Epic MyChart, Cerner SMART on FHIR
 
 **Priority 5: SCADA and Industrial Systems** (99.99% uptime)
+
 - OPC-UA, Modbus RTU/TCP, Profinet, EtherCAT
 - Power utilities: DNP3, IEC 61850, IEC 60870-5
 - Building automation: BACnet, LonWorks, KNX
@@ -250,6 +274,17 @@ interface AGCPNodeIdentifier {
 ```
 
 ### 2.2 AGCP Self-Evolution Engine
+
+> **Binding constraint - read before implementing this section.** Inferring an
+> unknown binary protocol and generating a translator for it is an unsolved
+> problem and a known attack surface: it places a parser built from
+> attacker-influenced input into the trusted path. Any implementation of this
+> section MUST run inference and generated code in an isolated sandbox with no
+> ambient authority, bounded memory and CPU, and no network or filesystem access;
+> and MUST require human review and recorded promotion before the translator is
+> used in any non-experimental path. See
+> [ADR-0004](../../docs/adr/0004-self-evolution-sandboxing.md) and
+> `CONFORMANCE.md` `CON-MUSTNOT-001`.
 
 ```typescript
 interface AGCPSelfEvolutionEngine {
@@ -995,6 +1030,7 @@ interface DeploymentTopology {
 ## 🛡️ Self-Healing Architecture & Live Deployment Flows
 
 ### 1. Self-Healing System Nodes
+
 - All deployed nodes (cloud, edge, on-prem) run a self-healing agent that:
   - Monitors local health, resource usage, and protocol connectivity
   - Automatically restarts, reconfigures, or migrates workloads on failure
@@ -1003,6 +1039,7 @@ interface DeploymentTopology {
   - Reports status and incidents to the global monitoring dashboard
 
 ### 2. Programming Flows to Live Deployments
+
 - Visual programming flows are versioned and can be deployed to any environment (cloud, edge, hybrid) via the Visual IDE.
 - Deployment pipeline:
   1. Design/modify flow in Visual IDE (with live validation)
@@ -1012,6 +1049,7 @@ interface DeploymentTopology {
   5. Real-time feedback and health status are streamed back to the Visual IDE
 
 ### 3. Real-Time Monitoring Dashboard
+
 - The Visual IDE includes a live dashboard for:
   - Node and agent health (status, resource usage, error rates)
   - Flow execution state (active, failed, pending)

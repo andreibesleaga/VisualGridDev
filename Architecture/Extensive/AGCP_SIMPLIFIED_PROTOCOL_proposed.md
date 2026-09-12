@@ -1,18 +1,26 @@
 # AGCP Simplified Protocol Specification
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 **Version**: 2.0  
 **Date**: 2025-08-05  
-**Status**: Simplified Production Ready DRAFT 
+**Status**: Draft - simplified protocol proposal, not implemented
 
 ---
 
 ## 🎯 **Simplification Goals**
 
-- **Reduce complexity** by 60% while maintaining core functionality
+- **Reduce complexity** relative to the previous draft while keeping the core behaviour. The reduction is an
+  objective, not a measured result
 - **Maintain compatibility** with A2A, MCP, and other protocols
 - **Streamline message structure** for better performance
 - **Simplify bridge development** with minimal interfaces
-- **Keep essential features** for production use
+- **Keep the essential features** needed to complete one end-to-end path - which does not exist yet
 
 ---
 
@@ -647,17 +655,20 @@ console.log("Active Bridges:", Object.keys(status.bridges).length);
 - **Agent Roles**: Maintained all 70+ roles with 8 new AI compliance supervisors (+11%)
 - **Bridge Interface**: Reduced from 10+ methods to 5 essential methods (-50%)
 - **Protocol Support**: Maintained compatibility with A2A, MCP, ANP, ACP, HTTP, and others
-- **Code Size**: Estimated 60% reduction in implementation complexity
+- **Code size**: a reduction in implementation complexity is _estimated_, not measured, because no
+  implementation exists to measure
 
 ### Maintained Features
-✅ **Protocol Compatibility**: Full A2A and MCP compatibility  
-✅ **Message Translation**: Bidirectional protocol translation  
-✅ **Security**: Optional authentication and signatures  
+
+- **Protocol compatibility**: A2A and MCP are targets. No compatibility has been demonstrated.  
+- **Message translation**: bidirectional translation is proposed, and untested.  
+- **Security**: transport authentication is mandatory (`CON-CORE-009`), not optional.  
 ✅ **Monitoring**: Basic metrics and tracing  
 ✅ **Health Checks**: Bridge and system health monitoring  
 ✅ **Extensibility**: Easy to add new protocol bridges  
 
 ### Performance Benefits
+
 - **Faster Processing**: Simplified message structure
 - **Lower Memory**: Reduced metadata overhead
 - **Better Throughput**: Streamlined translation logic
@@ -670,6 +681,7 @@ console.log("Active Bridges:", Object.keys(status.bridges).length);
 ### From Full AGCP to Simplified AGCP
 
 1. **Message Migration**:
+
    ```typescript
    // Old complex message
    const oldMessage = {
@@ -707,7 +719,7 @@ console.log("Active Bridges:", Object.keys(status.bridges).length);
 
 ---
 
-**Implementation Status**: Simplified Production Ready  
+**Implementation Status**: Draft - no implementation exists  
 **Version**: 2.0  
 **Complexity Reduction**: 60%  
 **Compatibility**: Full A2A/MCP support maintained  

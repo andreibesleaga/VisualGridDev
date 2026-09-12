@@ -1,5 +1,12 @@
 # AGCP Protocol Schemas and Interfaces (Simplified v2.0)
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 **Version**: 2.0  
 **Date**: 2025-08-05  
 **Status**: DRAFT
@@ -1529,23 +1536,34 @@ interface PluginDependency {
 
 ---
 
-## **Complete Protocol Schema Summary**
+## **Draft Schema Summary**
 
-This comprehensive protocol schema document provides:
+This document is a **draft**. It sketches TypeScript interfaces for the AGCP
+envelope, for the bridge contract, and for a large set of foreign protocols.
 
-✅ **Universal Protocol Support**: Complete interfaces for 40+ protocols  
-✅ **Production-Ready Schemas**: Full TypeScript definitions with JSON Schema validation  
-✅ **Bridge Architecture**: Standardized bridge development framework  
-✅ **Testing Framework**: Comprehensive testing, benchmarking, and security validation  
-✅ **Monitoring Integration**: OpenTelemetry tracing and Prometheus metrics  
-✅ **Plugin System**: Hot-loadable extensions for custom protocols  
-✅ **Legacy Integration**: Support for mainframe, SAP, and AS/400 systems  
-✅ **IoT Protocols**: Complete Thread, Matter, Zigbee, and LoRaWAN support  
-✅ **Edge Computing**: EdgeX, KubeEdge, and OpenYurt integration  
-✅ **Security Framework**: Vulnerability scanning and penetration testing  
+An earlier revision of this section presented the schemas as complete, listed
+"40+ protocols supported", and claimed "comprehensive testing, benchmarking, and
+security validation", "vulnerability scanning and penetration testing", and
+"testing coverage: comprehensive". **None of that was true.** No schema here has
+been validated against an implementation, no test suite exists, and no bridge has
+ever been built.
 
-**Implementation Status**: Production Ready  
-**Version**: 5.0  
-**Total Protocols Supported**: 40+  
-**Bridge Interfaces**: Complete  
-**Testing Coverage**: Comprehensive
+What is actually true:
+
+| Item | Status |
+|---|---|
+| Envelope schema | Draft. Machine-readable form under [`Architecture/Schemas/`](../Schemas/) |
+| Bridge contract | Draft. See [`agcp-core.proto`](../Schemas/agcp-core.proto) |
+| Protocols supported | **Zero.** No bridge is implemented or fixture-tested |
+| Testing coverage | **None.** No test suite exists |
+| Benchmarks | **None.** Figures elsewhere in this repository are targets |
+| Security validation | **None.** No scan, review, or penetration test has been performed |
+| Known alignment deltas | Recorded in [`Architecture/Schemas/README.md`](../Schemas/README.md) |
+
+Requirements that an implementation would have to satisfy are stated in
+[CONFORMANCE.md](../../CONFORMANCE.md). The fidelity limitations of each proposed
+bridge - including cases where translation is lossy or a category error - are
+recorded in [`Architecture/Schemas/bridges.json`](../Schemas/bridges.json).
+
+**Version**: 0.1.0-draft
+**Implementation status**: none

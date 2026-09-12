@@ -1,0 +1,164 @@
+// SPDX-FileCopyrightText: 2025-2026 Andrei Nicolae Besleaga
+// SPDX-License-Identifier: Apache-2.0
+//
+// AGCP core protocol — draft.
+//
+// STATUS: DRAFT, NON-NORMATIVE UNTIL FROZEN. No implementation exists.
+// Derived from Architecture/Extensive/AGCP_PROTOCOL_SCHEMAS.md with the deltas
+// recorded in Architecture/Schemas/README.md.
+//
+// This file defines the envelope and the bridge service contract that a
+// conformant implementation must provide (CONFORMANCE.md CON-CORE-001,
+// CON-BRIDGE-001). It deliberately does NOT define protocol-specific semantics:
+// those belong to each bridge, per ADR-0001.
+
+syntax = "proto3";
+
+package agcp.v1;
+
+option java_multiple_files = true;
+option java_package = "dev.visualgriddev.agcp.v1";
+option go_package = "github.com/andreibesleaga/visualgriddev/agcp/v1;agcpv1";
+
+// The message kind. "error" is added relative to the prose schema so that
+// CON-CORE-012 has a typed carrier.
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  MESSAGE_TYPE_REQUEST = 1;
+  MESSAGE_TYPE_RESPONSE = 2;
+  MESSAGE_TYPE_EVENT = 3;
+  MESSAGE_TYPE_COMMAND = 4;
+  MESSAGE_TYPE_NOTIFICATION = 5;
+  MESSAGE_TYPE_HEARTBEAT = 6;
+  MESSAGE_TYPE_ERROR = 7;
+}
+
+// The serialisation of the payload. "binary" is intentionally not permitted;
+// CON-CORE-006 names Protocol Buffers explicitly.
+enum Encoding {
+  ENCODING_UNSPECIFIED = 0;
+  ENCODING_PROTOBUF = 1;
+  ENCODING_JSON = 2;
+}
+
+// Stable error taxonomy. Every rejection must carry one of these
+// (CON-CORE-012); an implementation must not fail silently.
+enum ErrorCode {
+  ERROR_CODE_UNSPECIFIED = 0;
+  ERROR_CODE_UNSUPPORTED_VERSION = 1;
+  ERROR_CODE_UNAUTHENTICATED = 2;
+  ERROR_CODE_UNAUTHORISED = 3;
+  ERROR_CODE_RATE_LIMITED = 4;
+  ERROR_CODE_PAYLOAD_TOO_LARGE = 5;
+  ERROR_CODE_MALFORMED = 6;
+  ERROR_CODE_TRANSLATION_FAILED = 7;
+  ERROR_CODE_DEADLINE_EXCEEDED = 8;
+  ERROR_CODE_DEPENDENCY_UNAVAILABLE = 9;
+  ERROR_CODE_INTERNAL = 10;
+}
+
+// The single envelope all inter-component communication uses
+// (CON-CORE-001, CON-CORE-004).
+message AgcpMessage {
+  // Version-4 UUID, stable across retries (CON-CORE-002).
+  string id = 1;
+
+  // Semantic version of the AGCP revision the sender implements
+  // (CON-CORE-003). A receiver must reject a revision it does not implement
+  // rather than attempting a best-effort parse (CON-CORE-008).
+  string version = 2;
+
+  // Unix epoch seconds.
+  int64 timestamp = 3;
+
+  // Source node identifier. Never a personal identifier.
+  string from = 4;
+
+  // Destination node or nodes.
+  repeated string to = 5;
+
+  MessageType type = 6;
+
+  // Preserved across every bridge translation (CON-CORE-005).
+  string correlation_id = 7;
+
+  // Message-level signature. Transport authentication is separate and
+  // mandatory (CON-CORE-009). Credentials must never appear here
+  // (CON-CORE-011).
+  bytes signature = 8;
+
+  Encoding encoding = 9;
+
+  // Declared maximum payload size, enforced at the receiver (CON-CORE-013).
+  int64 max_payload_bytes = 10;
+
+  // Optional lifetime; a receiver discards rather than delivers an expired
+  // message.
+  int64 ttl_seconds = 11;
+
+  // Routing metadata that a router may read without parsing the payload
+  // (CON-CORE-004).
+  map<string, string> routing = 12;
+
+  // Non-identifying metadata such as originating bridge revision.
+  map<string, string> context = 13;
+
+  // Payload. Shape is determined by type and by the producing bridge.
+  bytes data = 14;
+
+  // Typed error, populated only when type is MESSAGE_TYPE_ERROR.
+  AgcpError error = 15;
+}
+
+message AgcpError {
+  ErrorCode code = 1;
+  string message = 2;
+  bool retryable = 3;
+  // Optional field-level detail, for schema validation failures.
+  repeated string details = 4;
+}
+
+// ---------------------------------------------------------------------------
+// Bridge contract
+// ---------------------------------------------------------------------------
+
+// A foreign protocol adapter. Every bridge must implement this
+// (CON-BRIDGE-001).
+message TranslateRequest {
+  // The original encoded message exactly as received.
+  bytes original = 1;
+  // Declared foreign protocol revision. A bridge must reject a revision it
+  // does not implement (CON-BRIDGE-004).
+  string source_protocol = 2;
+  string source_revision = 3;
+}
+
+message TranslateResponse {
+  AgcpMessage message = 1;
+  // Fields that had no AGCP representation. A bridge must never drop a field
+  // silently (CON-BRIDGE-003).
+  repeated string unmapped_fields = 2;
+  // The original bytes, carried alongside the translation so a recipient can
+  // recover what the sender actually sent (CON-BRIDGE-002).
+  bytes original = 3;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  bool healthy = 1;
+  string detail = 2;
+}
+
+// The bridge service. Conformant bridges expose this contract.
+service ProtocolBridge {
+  // Translate a foreign message into AGCP.
+  rpc TranslateToAgcp(TranslateRequest) returns (TranslateResponse);
+
+  // Translate an AGCP message into the foreign protocol.
+  rpc TranslateFromAgcp(AgcpMessage) returns (TranslateResponse);
+
+  // Report bridge health. Must not report healthy when translation is
+  // degraded.
+  rpc Health(HealthRequest) returns (HealthResponse);
+}

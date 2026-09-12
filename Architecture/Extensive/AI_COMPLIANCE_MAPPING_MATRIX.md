@@ -1,5 +1,12 @@
 # AI Compliance Mapping Matrix
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 This matrix maps VisualGridDev’s controls and features to major AI regulations and security standards.
 
 | Control/Feature                | EU AI Act | NIST AI RMF | IEEE CertifAIEd | GDPR | SOC2 | ISO 27001 | HIPAA |
@@ -19,4 +26,4 @@ This matrix maps VisualGridDev’s controls and features to major AI regulations
 | Ongoing Monitoring/Recert.     |     X     |      X      |        X       |      |   X  |     X     |   X   |
 | Human-Centric/Ethical Design   |     X     |      X      |        X       |      |      |           |       |
 
-Legend: X = Explicitly addressed by VisualGridDev controls/features
+Legend: X = a document in this repository discusses this area. It does **not** mean a control exists: no control, feature, or component has been implemented. See [PROJECT_STATUS.md](../../PROJECT_STATUS.md).

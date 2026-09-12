@@ -1,0 +1,162 @@
+name: Docs CI
+
+# Documentation gates for a specification repository. Nothing here executes
+# repository code, because there is none. Every job is deterministic.
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: docs-ci-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    markdown:
+        name: Markdown lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+              with:
+                  persist-credentials: false
+            - name: Lint Markdown
+              uses: DavidAnson/markdownlint-cli2-action@05f32210e84442804257b2a6f20b273450ec8265 # v19
+              with:
+                  globs: "**/*.md"
+
+    links:
+        name: Links and anchors
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+              with:
+                  persist-credentials: false
+            - name: Check external and internal links
+              uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
+              with:
+                  args: --no-progress --verbose --include-fragments "./**/*.md"
+                  fail: true
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+    artefacts:
+        name: Machine-readable artefacts
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+              with:
+                  persist-credentials: false
+            - name: Set up Python
+              uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+              with:
+                  python-version: "3.12"
+                  cache: pip
+            - name: Install validators
+              run: python3 -m pip install --disable-pip-version-check "jsonschema==4.23.0" "pyyaml==6.0.2"
+            - name: Validate JSON Schema
+              run: |
+                  python3 - <<'PY'
+                  import json, sys
+                  from pathlib import Path
+                  import jsonschema
+
+                  failed = False
+                  for path in sorted(Path("Architecture/Schemas").glob("*.schema.json")):
+                      try:
+                          document = json.loads(path.read_text(encoding="utf-8"))
+                          jsonschema.Draft202012Validator.check_schema(document)
+                          print(f"ok   {path}")
+                      except Exception as exc:
+                          print(f"FAIL {path}: {exc}")
+                          failed = True
+                  sys.exit(1 if failed else 0)
+                  PY
+            - name: Validate JSON registries
+              run: |
+                  python3 - <<'PY'
+                  import json, sys
+                  from pathlib import Path
+
+                  failed = False
+                  for path in sorted(Path("Architecture/Schemas").glob("*.json")):
+                      if path.name.endswith(".schema.json"):
+                          continue
+                      try:
+                          document = json.loads(path.read_text(encoding="utf-8"))
+                          print(f"ok   {path}")
+                      except Exception as exc:
+                          print(f"FAIL {path}: {exc}")
+                          failed = True
+                  sys.exit(1 if failed else 0)
+                  PY
+            - name: Check the bridge registry classifies every bridge
+              run: |
+                  python3 - <<'PY'
+                  import json, sys
+                  from pathlib import Path
+
+                  registry = json.loads(Path("Architecture/Schemas/bridges.json").read_text(encoding="utf-8"))
+                  allowed_profiles = set(registry["profileRules"])
+                  allowed_status = {"planned", "fixture-tested", "supported"}
+                  problems = [
+                      bridge["id"]
+                      for bridge in registry["bridges"]
+                      if bridge.get("profile") not in allowed_profiles
+                      or bridge.get("status") not in allowed_status
+                  ]
+                  print(f"{len(registry['bridges'])} bridges registered")
+                  if problems:
+                      print("unclassified or invalid entries:", ", ".join(problems), file=sys.stderr)
+                      sys.exit(1)
+                  PY
+
+    diagrams:
+        name: PlantUML renders
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+              with:
+                  persist-credentials: false
+            - name: Check PlantUML sources
+              run: |
+                  docker run --rm --user "$(id -u):$(id -g)" \
+                    -v "$PWD:/work" -w /work \
+                    plantuml/plantuml:1.2024.8 \
+                    -checkonly Architecture/Extensive/diagrams/*.puml
+
+    claim-discipline:
+        name: Claim discipline
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+              with:
+                  persist-credentials: false
+            - name: Reject unsupported status claims outside the corrective documents
+              run: |
+                  set -eu
+                  # These phrasings are permitted only in documents that explicitly
+                  # discuss retiring them, and never outside the status banner, which
+                  # quotes them deliberately.
+                  allowed='^(README\.md|PROJECT_STATUS\.md|CONFORMANCE\.md|CHANGELOG\.md|LICENSE-SPEC\.md|SECURITY\.md|CONTRIBUTING\.md|CODE_OF_CONDUCT\.md|docs/adr/|\.github/|Architecture/Extensive/FINAL_ARCHITECTURE_SUMMARY\.md|Architecture/Extensive/PRODUCTION_CHECKLIST\.md)'
+                  hits=$(grep -rniE 'production[ -]?ready|100% (protocol|compatibility)|no (major )?gaps (detected|remain)' \
+                           --include='*.md' . \
+                         | grep -vF 'inherited from earlier' \
+                         | grep -vF 'unsupported and are being retired' \
+                         | grep -vF 'must not describe itself' \
+                         | cut -d: -f1 | sed 's|^\./||' | sort -u \
+                         | grep -vE "$allowed" || true)
+                  if [ -n "$hits" ]; then
+                    echo "Unsupported status claims found in:" >&2
+                    echo "$hits" >&2
+                    exit 1
+                  fi
+                  echo "no unsupported status claims outside the corrective documents"

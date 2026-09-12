@@ -1,10 +1,17 @@
 # VisualGridDev Studio: UI Mockups and Interface Designs
 
-> **Note:** All UI mockups below are fully aligned with FINAL_UNIFIED_ARCHITECTURE_v5.0.md and the production-ready system architecture. They reflect universal extensibility, live collaboration, self-healing, and real-time monitoring as core features.
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+>
+> **Note:** These mockups illustrate the _proposed_ interface described in [FINAL_UNIFIED_ARCHITECTURE_v5.0.md](../FINAL_UNIFIED_ARCHITECTURE_v5.0.md). They are concept images, not screenshots of a working system. Extensibility, live collaboration, self-healing, and monitoring are proposed features, not implemented ones.
 
 ## Main Studio Interface Layout
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════════╗
 ║ VisualGridDev Studio                    File Edit View Deploy Help        admin ⚙️ ↗️ ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣
@@ -39,7 +46,7 @@
 
 ## Node Configuration Dialog
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════════╗
 ║ Configure Node: AI Agent                                                     ✖️ ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣
@@ -89,7 +96,7 @@
 
 ## Real-time Monitoring Dashboard
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════════╗
 ║ VisualGridDev Studio - Live System Monitor                              🔄 Auto-refresh ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣
@@ -140,7 +147,7 @@
 
 ## Flow Designer with Node Palette
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════════╗
 ║ Flow Designer - Customer Support Automation                                     ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣
@@ -181,7 +188,7 @@
 
 ## Deployment Status Dashboard
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════════╗
 ║ Deployment Manager - Multi-Environment Status                                   ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣
@@ -231,7 +238,7 @@
 
 ## System Architecture Visualization
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════════════╗
 ║ VisualGridDev Studio - System Architecture View                                       ║
 ╠══════════════════════════════════════════════════════════════════════════════════╣

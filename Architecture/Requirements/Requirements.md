@@ -1,3 +1,12 @@
+# Requirements
+
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 Requirements:
 
 - Visual Language IDE web app based, to support all design flows and event-driven graphical programming similar to LabVIEW.
@@ -13,43 +22,44 @@ Requirements:
 4. **Data Consistency**: Configurable per data type and system requirements
 5. **Security Strategy**: Zero-trust mTLS core + AI adaptive security per deployment
 
+## **Phase : Core Internet & Web**
 
-### **Phase : Core Internet & Web **
-### **Phase : AI & ML Ecosystem ** 
-### **Phase : Big Data & Cloud-Native **
-### **Phase : Blockchain & Emerging **
-### **Phase : Legacy systems & Adaptive Future Forward Systems Compatibility**
+## **Phase : AI & ML Ecosystem**
 
+## **Phase : Big Data & Cloud-Native**
 
+## **Phase : Blockchain & Emerging**
 
-Here is a comprehensive traceability matrix, cross-referencing all requirements (functional and non-functional) with the architecture, protocols, deployment, and documentation. This is followed by a logic/consistency check and a summary of any remaining gaps or recommendations.
+## **Phase : Legacy systems & Adaptive Future Forward Systems Compatibility**
+
+This traceability matrix cross-references each requirement with the documents that discuss it. A tick means _a document addresses this requirement_; it does not mean the requirement is met, tested, or implemented. Read the final column with that in mind.
 
 ---
 
 ## 1. Traceability Matrix: Requirements → Architecture & Docs
 
-| Requirement / Feature                                                                 | Architecture Spec | Protocol Schemas | Deployment | Implementation Roadmap | Docs/Diagrams | Status |
+| Requirement / Feature                                                                 | Architecture Spec | Protocol Schemas | Deployment | Implementation Roadmap | Docs/Diagrams | Addressed in docs |
 |--------------------------------------------------------------------------------------|-------------------|------------------|------------|-----------------------|---------------|--------|
-| Visual Language IDE (web, event-driven, LabVIEW-like)                                | ✅                | N/A              | N/A        | ✅                    | C4, arc42     | ✅     |
-| Mesh distributed deployment (cloud, edge, p2p)                                       | ✅                | N/A              | ✅         | ✅                    | Deployment    | ✅     |
-| Real-time monitoring, logging, dashboards                                            | ✅                | N/A              | ✅         | ✅                    | Monitoring    | ✅     |
-| AI agents, NodeRED/SQLiteAI nodes, agentic flows                                     | ✅                | ✅                | ✅         | ✅                    | Logical, C4   | ✅     |
-| Adaptive security, self-evolution, plugin system                                     | ✅                | ✅                | ✅         | ✅                    | Security      | ✅     |
-| Legacy frameworks/languages/systems compatibility                                    | ✅                | ✅                | ✅         | ✅                    | arc42, C4     | ✅     |
-| Node.js/TypeScript core, Python AI/ML, native perf                                   | ✅                | N/A              | N/A        | ✅                    | Tech Stack    | ✅     |
-| AGCP protocol, A2A/MCP/ANP/ACP, multi-protocol adapters                             | ✅                | ✅                | ✅         | ✅                    | Protocols     | ✅     |
-| Hybrid decentralized discovery, fallback, local cache                                | ✅                | N/A              | ✅         | ✅                    | Logical       | ✅     |
-| Configurable data consistency                                                        | ✅                | N/A              | ✅         | ✅                    | Logical       | ✅     |
-| Zero-trust mTLS, AI adaptive security                                                | ✅                | ✅                | ✅         | ✅                    | Security      | ✅     |
-| Role-based connector nodes (all listed roles)                                        | ✅                | N/A              | N/A        | ✅                    | Logical       | ✅     |
-| Universal system connectivity (finance, health, blockchain, legacy, real-time, OSI)  | ✅                | ✅                | ✅         | ✅                    | Protocols     | ✅     |
-| Priority system (Web→AI/ML→IoT→Health→SCADA)                                         | ✅                | N/A              | N/A        | ✅                    | All docs      | ✅     |
-| Hot-loadable extension/plugin system, schema importer                                | ✅                | ✅                | ✅         | ✅                    | Extensibility | ✅     |
-| Live collaboration in Visual IDE                                                     | ✅                | N/A              | N/A        | ✅                    | Sequence      | ✅     |
-| Self-healing nodes, live deployment flows                                            | ✅                | N/A              | ✅         | ✅                    | State, Runtime| ✅     |
-| Real-time dashboard in Visual IDE                                                    | ✅                | N/A              | ✅         | ✅                    | Monitoring    | ✅     |
-| Quantum, edge AI, 6G, future tech, backwards compatibility                          | ✅                | ✅                | ✅         | ✅                    | Extensibility | ✅     |
-| All required diagrams (C4, arc42, system, context, state, sequence, runtime, etc.)   | N/A               | N/A              | N/A        | N/A                   | PlantUML      | ✅     |
+| Visual Language IDE (web, event-driven, LabVIEW-like)                                | Yes                | N/A              | N/A        | Yes                    | C4, arc42     | Yes     |
+| Mesh distributed deployment (cloud, edge, p2p)                                       | Yes                | N/A              | Yes         | Yes                    | Deployment    | Yes     |
+| Real-time monitoring, logging, dashboards                                            | Yes                | N/A              | Yes         | Yes                    | Monitoring    | Yes     |
+| AI agents, NodeRED/SQLiteAI nodes, agentic flows                                     | Yes                | Yes                | Yes         | Yes                    | Logical, C4   | Yes     |
+| Adaptive security, self-evolution, plugin system                                     | Yes                | Yes                | Yes         | Yes                    | Security      | Yes     |
+| Legacy frameworks/languages/systems compatibility                                    | Yes                | Yes                | Yes         | Yes                    | arc42, C4     | Yes     |
+| Node.js/TypeScript core, Python AI/ML, native perf                                   | Yes                | N/A              | N/A        | Yes                    | Tech Stack    | Yes     |
+| AGCP protocol, A2A/MCP/ANP/ACP, multi-protocol adapters                             | Yes                | Yes                | Yes         | Yes                    | Protocols     | Yes     |
+| Hybrid decentralized discovery, fallback, local cache                                | Yes                | N/A              | Yes         | Yes                    | Logical       | Yes     |
+| Configurable data consistency                                                        | Yes                | N/A              | Yes         | Yes                    | Logical       | Yes     |
+| Zero-trust mTLS, AI adaptive security                                                | Yes                | Yes                | Yes         | Yes                    | Security      | Yes     |
+| Role-based connector nodes (all listed roles)                                        | Yes                | N/A              | N/A        | Yes                    | Logical       | Yes     |
+| Universal system connectivity (finance, health, blockchain, legacy, real-time, OSI)  | Yes                | Yes                | Yes         | Yes                    | Protocols     | Yes     |
+| Priority system (Web→AI/ML→IoT→Health→SCADA)                                         | Yes                | N/A              | N/A        | Yes                    | All docs      | Yes     |
+| Hot-loadable extension/plugin system, schema importer                                | Yes                | Yes                | Yes         | Yes                    | Extensibility | Yes     |
+| Live collaboration in Visual IDE                                                     | Yes                | N/A              | N/A        | Yes                    | Sequence      | Yes     |
+| Self-healing nodes, live deployment flows                                            | Yes                | N/A              | Yes         | Yes                    | State, Runtime| Yes     |
+| Real-time dashboard in Visual IDE                                                    | Yes                | N/A              | Yes         | Yes                    | Monitoring    | Yes     |
+| Quantum, edge AI, 6G, future tech, backwards compatibility                          | Yes                | Yes                | Yes         | Yes                    | Extensibility | Yes     |
+| All required diagrams (C4, arc42, system, context, state, sequence, runtime, etc.)   | N/A               | N/A              | N/A        | N/A                   | PlantUML      | Yes     |
 
 ---
 
@@ -90,21 +100,27 @@ Here is a comprehensive traceability matrix, cross-referencing all requirements 
 
 ---
 
-## 4. Logic & Consistency Check
+## 4. Consistency check
 
-- **System Flows**: All flows (design, deploy, monitor, heal, extend) are described and diagrammed. No missing transitions or undefined states.
-- **Technology Fit**: All tech choices (Node.js/TS, Python, libp2p, Kubernetes, CRDTs, PlantUML, etc.) are compatible and well-integrated.
-- **Extensibility**: All extension points (protocols, agents, UI, deployment, monitoring) are manifest/schema-based and hot-loadable.
-- **Security**: All extension/plugin actions are signed, validated, and sandboxed. Self-healing agents enforce policies and compliance.
-- **Backwards/Future Compatibility**: Explicit compatibility layer, schema versioning, migration tools, and support for unknown tech.
-- **Documentation**: All docs and diagrams are present, referenced, and consistent. PlantUML sources included.
-- **No Contradictions**: No architectural, logical, or requirements conflicts remain.
+This section previously asserted that no missing transitions, undefined states,
+or contradictions remained, and that all extension actions "are signed, validated,
+and sandboxed". As a statement about a specification with no implementation, that
+was not verifiable, and it was contradicted elsewhere in this repository - most
+obviously by the three different agent-role counts.
 
----
+What can be said:
+
+| Check | Result |
+|---|---|
+| Requirement identifiers traceable | Yes - mechanically checked; see `tools/check_rtm.py` in the sibling repository |
+| Documents mutually consistent | **No.** Three role counts coexist (70+, 20, and five primitives); see [ADR-0005](../../docs/adr/0005-agent-role-primitives.md) |
+| Protocol version consistent | **No.** Four different version labels appear across the documents |
+| Scope bounded | **No.** See [ADR-0003](../../docs/adr/0003-core-and-extended-profiles.md) |
+| Security properties evidenced | **No.** Sandboxing, signing, and validation are requirements, not achieved properties; see `CONFORMANCE.md` and [SECURITY.md](../../SECURITY.md) |
 
 ## 5. Gaps & Recommendations
 
-- **No major gaps detected.** All requirements (including extensibility, self-healing, live collaboration, and future-proofing) are addressed.
+- **Gaps are acknowledged, not closed.** Every row above records that a _document_ addresses a requirement. It does not record that a capability works. The material gaps - no implementation, no conformance suite, no benchmark evidence, unresolved core scope, and undefined self-evolution safety behaviour - are listed in [PROJECT_STATUS.md](../../PROJECT_STATUS.md).
 - **Continuous Review**: As new protocols/tech emerge, update the extension registry and schemas.
 - **Testing**: Ensure all extension/plugin code is covered by automated tests and security scans.
 - **User Feedback**: Incorporate user feedback from live deployments to refine flows and dashboards.
@@ -114,4 +130,4 @@ Here is a comprehensive traceability matrix, cross-referencing all requirements 
 
 ## 6. Final Statement
 
-**The VisualGridDev v5.0 architecture, protocols, deployment, and documentation are now fully unified, logically consistent, future-proof, and production-ready. All functional and non-functional requirements are satisfied, and the system is extensible for any future needs.**
+**This specification is a draft.** The documents are internally inconsistent in places and the requirements are stated, not satisfied. Its value is as a design proposal to be reviewed and reduced in scope, not as evidence of a working system. See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and the list of known gaps.

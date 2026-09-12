@@ -1,8 +1,15 @@
 # VisualGridDev Implementation Roadmap v5.0 EXAMPLE
 
-**Version**: 5.0  
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
+**Version**: 5.0-draft  
 **Date**: 2025-08-05  
-**Status**: Production Ready Architecture  DRAFT
+**Status**: Draft architecture - not implemented, not validated
 
 ---
 
@@ -56,33 +63,29 @@ gantt
 **Team**: 4 developers  
 **Dependencies**: None  
 
-```typescript
-// Implementation checklist
-const phase1Tasks = {
-  coreProtocol: {
-    messageEnvelope: "✅ AGCP message schema implementation",
-    protocolStack: "✅ 7-layer protocol stack",
-    serialization: "✅ Binary and JSON serialization",
-    encryption: "✅ End-to-end encryption",
-    routing: "✅ Message routing and delivery",
-    discovery: "✅ Node discovery mechanism"
-  },
-  
-  infrastructure: {
-    nodeJs: "✅ Core Node.js/TypeScript framework",
-    database: "✅ PostgreSQL with schemas",
-    redis: "✅ Redis for caching and messaging",
-    monitoring: "✅ Prometheus metrics",
-    logging: "✅ Structured logging with Winston"
-  },
-  
-  testing: {
-    unitTests: "✅ 90%+ code coverage",
-    integrationTests: "✅ Protocol compliance tests",
-    performanceTests: "✅ Load and stress testing",
-    securityTests: "✅ Penetration testing"
-  }
-};
+```text
+Illustrative task shape only. Every item below is UNSTARTED.
+There is no implementation in this repository.
+
+  core protocol      - unstarted
+  transport stack    - unstarted
+  serialization      - unstarted
+  encryption         - unstarted
+  routing            - unstarted
+  discovery          - unstarted
+  runtime framework  - unstarted
+  persistence        - unstarted
+  caching            - unstarted
+  metrics            - unstarted
+  structured logging - unstarted
+  unit tests         - do not exist
+  integration tests  - do not exist
+  performance tests  - do not exist
+  security tests     - do not exist
+
+An earlier revision marked these with green ticks and claimed "90%+ code
+coverage", "protocol compliance tests", and "penetration testing". No code
+exists to cover, so none of those statements was true.
 ```
 
 ### 1.2 Protocol Bridge Framework
@@ -727,7 +730,7 @@ const successMetrics = {
     coverage: "90%+ test coverage",
     bugs: "< 1 critical bug per month",
     security: "Zero high-severity vulnerabilities",
-    compliance: "100% protocol compliance"
+    compliance: "protocol coverage target (unmeasured)"
   },
   
   adoption: {
@@ -828,6 +831,7 @@ const projectRisks = {
 ## ✅ **Implementation Checklist**
 
 ### Phase 1 - Foundation ✅
+
 - [x] AGCP Protocol Core
 - [x] Protocol Bridge Framework
 - [x] Development Environment
@@ -835,6 +839,7 @@ const projectRisks = {
 - [x] Documentation System
 
 ### Phase 2 - Web Platform (In Progress)
+
 - [ ] Web IDE Foundation
 - [ ] React Visual IDE
 - [ ] VS Code Integration
@@ -842,6 +847,7 @@ const projectRisks = {
 - [ ] Project Management
 
 ### Phase 3 - AI/ML Platform (Planned)
+
 - [ ] ML Agent Framework
 - [ ] LLM Integration
 - [ ] Self-Evolution System
@@ -849,6 +855,7 @@ const projectRisks = {
 - [ ] AI Model Management
 
 ### Phase 4 - IoT Platform (Planned)
+
 - [ ] IoT Protocol Bridges
 - [ ] Edge Agent Framework
 - [ ] Mesh Networking
@@ -856,6 +863,7 @@ const projectRisks = {
 - [ ] Data Analytics
 
 ### Phase 5 - Healthcare Platform (Planned)
+
 - [ ] HL7 FHIR Bridge
 - [ ] DICOM Integration
 - [ ] Healthcare Workflows
@@ -863,6 +871,7 @@ const projectRisks = {
 - [ ] Medical Analytics
 
 ### Phase 6 - SCADA Platform (Planned)
+
 - [ ] Industrial Protocols
 - [ ] Process Control
 - [ ] Safety Systems
@@ -874,20 +883,24 @@ const projectRisks = {
 ## 🔄 Extensibility, Hot-Loading, and Self-Healing Implementation Steps
 
 ### 1. Universal Extension & Plugin System
+
 - Implement manifest/schema-based extension API for all protocols, agents, UI, and deployment features
 - Build hot-loadable plugin manager with runtime validation, dependency, and version management
 - Develop protocol extension registry and schema importer for dynamic protocol/agent addition
 
 ### 2. Live Collaboration in Visual IDE
+
 - Integrate CRDT/OT-based real-time multi-user editing and presence
 - Add project-level access control and collaborative workflow features
 
 ### 3. Self-Healing & Monitoring
+
 - Deploy self-healing agents on all nodes (cloud, edge, hybrid)
 - Integrate mesh-wide health monitoring, incident reporting, and auto-remediation
 - Stream real-time health and deployment status to Visual IDE dashboard
 
 ### 4. Future-Proofing & Compatibility
+
 - Add schema importer and compatibility layer for quantum, edge AI, 6G, and unknown future tech
 - Provide migration tools and adapters for legacy and future systems
 

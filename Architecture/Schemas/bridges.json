@@ -1,0 +1,228 @@
+{
+  "$comment": "SPDX-FileCopyrightText: 2025-2026 Andrei Nicolae Besleaga. SPDX-License-Identifier: Apache-2.0. Draft bridge registry. Status is 'planned' for every entry because no bridge has been implemented or tested. A bridge must not be claimed as supported until it passes stored fixtures (CONFORMANCE.md CON-MUSTNOT-003). Profile classification follows the proposal in docs/adr/0003-core-and-extended-profiles.md and is not yet decided. Core is limited to the native internal transport plus the agent-interoperability protocols.",
+  "schemaVersion": "0.1.0-draft",
+  "specification": "AGCP",
+  "specificationVersion": "0.1.0-draft",
+  "profileRules": {
+    "core": "Proposed: the native internal transport plus the agent-interoperability protocols required for baseline interoperation.",
+    "extension": "Proposed: everything else, published as independently versioned extension packs."
+  },
+  "bridges": [
+    {
+      "id": "grpc",
+      "name": "gRPC",
+      "family": "rpc",
+      "profile": "core",
+      "status": "planned",
+      "fidelityNotes": "Internal transport baseline (CON-CORE-006). Not a translation target so much as the native transport."
+    },
+    {
+      "id": "a2a",
+      "name": "A2A",
+      "family": "agent",
+      "profile": "core",
+      "status": "planned",
+      "fidelityNotes": "Agent interoperability target. Foreign revision not yet pinned; see STANDARDS-VERSIONS.md."
+    },
+    {
+      "id": "mcp",
+      "name": "MCP",
+      "family": "agent",
+      "profile": "core",
+      "status": "planned",
+      "fidelityNotes": "Tool and context interoperability target. Foreign revision not yet pinned."
+    },
+    {
+      "id": "http",
+      "name": "HTTP/1.1 and HTTP/2",
+      "family": "web",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Request and response semantics do not map cleanly to an event envelope; streaming bodies have no AGCP representation. Not part of the proposed core: a web protocol is not the native internal transport."
+    },
+    {
+      "id": "websocket",
+      "name": "WebSocket",
+      "family": "web",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Full-duplex framing must be modelled as a session, not a single message. Not part of the proposed core: a web protocol is not the native internal transport."
+    },
+    {
+      "id": "mqtt",
+      "name": "MQTT 5.0",
+      "family": "messaging",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "QoS 1 and 2 duplicate delivery must be reconciled with envelope id deduplication. Retained messages and will messages have no direct AGCP equivalent."
+    },
+    {
+      "id": "amqp",
+      "name": "AMQP 1.0",
+      "family": "messaging",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Broker-level routing and transactions do not map to a message envelope."
+    },
+    {
+      "id": "kafka",
+      "name": "Apache Kafka",
+      "family": "streaming",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Partition ordering and offset semantics are not expressible in AGCP."
+    },
+    {
+      "id": "nats",
+      "name": "NATS",
+      "family": "messaging",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Subject wildcards have no direct equivalent."
+    },
+    {
+      "id": "coap",
+      "name": "CoAP",
+      "family": "iot",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "UDP-style confirmable messages need an explicit acknowledgement model."
+    },
+    {
+      "id": "lwm2m",
+      "name": "LwM2M",
+      "family": "iot",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Object and resource model is not representable as a message."
+    },
+    {
+      "id": "lorawan",
+      "name": "LoRaWAN",
+      "family": "iot",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Severe payload size constraints force lossy translation; must be recorded as unmapped."
+    },
+    {
+      "id": "zigbee",
+      "name": "Zigbee",
+      "family": "iot",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Mesh-layer addressing and commissioning are out of AGCP scope."
+    },
+    {
+      "id": "bluetooth",
+      "name": "Bluetooth LE",
+      "family": "iot",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "GATT profile semantics do not map to a message envelope."
+    },
+    {
+      "id": "webrtc",
+      "name": "WebRTC",
+      "family": "media",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Media streams are not messages. Only the signalling channel is a plausible bridge target."
+    },
+    {
+      "id": "modbus",
+      "name": "Modbus TCP/RTU",
+      "family": "industrial",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Poll and register semantics are stateful; a one-way translation loses coherence."
+    },
+    {
+      "id": "dnp3",
+      "name": "DNP3",
+      "family": "industrial",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Unsolicited responses, events, and time synchronisation are out of scope."
+    },
+    {
+      "id": "opcua",
+      "name": "OPC-UA",
+      "family": "industrial",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Information model and subscriptions have no AGCP equivalent."
+    },
+    {
+      "id": "bacnet",
+      "name": "BACnet",
+      "family": "building",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Object and property model is not message-shaped."
+    },
+    {
+      "id": "hl7v2",
+      "name": "HL7 v2",
+      "family": "health",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Delimiter-based, code-set dependent. Deferred: healthcare is out of the proposed core (ADR-0003)."
+    },
+    {
+      "id": "fhir",
+      "name": "HL7 FHIR",
+      "family": "health",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Resource-oriented REST API, not a message protocol. Deferred."
+    },
+    {
+      "id": "graphql",
+      "name": "GraphQL",
+      "family": "web",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Query planning and subscriptions are not messages."
+    },
+    {
+      "id": "sql",
+      "name": "SQL over wire protocols",
+      "family": "data",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Session-oriented and stateful. Bridging a database protocol to a message envelope is a category error worth challenging."
+    },
+    {
+      "id": "ssh",
+      "name": "SSH",
+      "family": "infrastructure",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Interactive session transport, not a message protocol."
+    },
+    {
+      "id": "snmp",
+      "name": "SNMP",
+      "family": "infrastructure",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Polling and trap duality must be normalised."
+    },
+    {
+      "id": "ldap",
+      "name": "LDAP",
+      "family": "identity",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "Directory search semantics are not messages."
+    },
+    {
+      "id": "smb",
+      "name": "SMB/CIFS",
+      "family": "storage",
+      "profile": "extension",
+      "status": "planned",
+      "fidelityNotes": "File semantics are out of scope; bridging them would be a design error."
+    }
+  ]
+}

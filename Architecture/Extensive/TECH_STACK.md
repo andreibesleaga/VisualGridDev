@@ -1,17 +1,28 @@
 # VisualGridDev Studio Technology Stack Specification
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 ## Core Technology Decisions
 
 ### 1. Runtime Environment
+
 **Primary Choice: Node.js/TypeScript**
-- **Rationale**: 
+
+- **Rationale**:
   - Node-RED is built on Node.js, ensuring seamless integration
   - Event-driven architecture aligns with flow-based programming
   - Rich ecosystem for networking and real-time applications
   - TypeScript provides type safety for large-scale development
 
 ### 2. Frontend Framework
+
 **Choice: React with TypeScript**
+
 - **Visual Flow Designer**: React Flow library for node-based editors
 - **Real-time Updates**: Socket.io client for WebSocket communication
 - **Code Editor**: Monaco Editor (VS Code engine) for inline editing
@@ -36,7 +47,9 @@ const AiAgentNode = ({ data }) => {
 ```
 
 ### 3. Mesh Networking
+
 **Choice: libp2p (JavaScript implementation)**
+
 - **Peer Discovery**: mDNS + Bootstrap nodes
 - **Transport**: TCP, WebSocket, WebRTC
 - **Security**: Noise protocol for encryption
@@ -60,7 +73,9 @@ const node = await createLibp2p({
 ```
 
 ### 4. AI/ML Services Architecture
+
 **Choice: Hybrid Approach**
+
 - **Embedded Python**: PyNode for lightweight ML tasks
 - **Microservices**: FastAPI for heavy ML workloads
 - **Orchestration**: LangChain/LangGraph integration
@@ -90,9 +105,11 @@ async def predict(request: MLRequest, background_tasks: BackgroundTasks):
 ```
 
 ### 5. Database & State Management
+
 **Choice: Multi-tier Database Strategy**
 
 #### Tier 1: SQLite-AI (Edge/Local)
+
 ```sql
 -- SQLite-AI with vector extensions
 CREATE VIRTUAL TABLE embeddings USING vec0(
@@ -108,6 +125,7 @@ ORDER BY distance;
 ```
 
 #### Tier 2: Distributed State (Raft Consensus)
+
 ```javascript
 // Raft-based state synchronization
 class DistributedState {
@@ -125,6 +143,7 @@ class DistributedState {
 ```
 
 #### Tier 3: Time-Series Data (InfluxDB)
+
 ```javascript
 // InfluxDB for metrics and monitoring
 const { InfluxDB, Point } = require('@influxdata/influxdb-client');
@@ -141,6 +160,7 @@ writeApi.writePoint(point);
 ```
 
 ### 6. Container & Orchestration
+
 **Choice: Kubernetes with Custom Operators**
 
 ```yaml
@@ -178,6 +198,7 @@ spec:
 ### 7. Communication Protocols
 
 #### Protocol Stack Implementation
+
 ```typescript
 // Multi-protocol message router
 interface MessageRouter {
@@ -204,6 +225,7 @@ class ProtocolRouter implements MessageRouter {
 ```
 
 ### 8. Security Implementation
+
 **Choice: Zero-Trust Architecture**
 
 ```typescript
@@ -232,7 +254,15 @@ class CertificateManager {
 ```
 
 ### 9. Self-Healing Implementation
+
 **Choice: MAPE-K Control Loops**
+
+> **Binding constraint.** The sketch below is illustrative. Any implementation
+> MUST NOT act on a failure mode that is not enumerated for the component in
+> question, MUST NOT be able to escalate privilege, and MUST provide an
+> operator-accessible stop mechanism that does not depend on the components it
+> stops. See [ADR-0004](../../docs/adr/0004-self-evolution-sandboxing.md),
+> `CONFORMANCE.md` `CON-MUSTNOT-004` and `CON-CORE-018`.
 
 ```typescript
 // MAPE-K Control Loop Implementation
@@ -271,6 +301,7 @@ class SelfHealingController {
 ### 10. Development Tools & CI/CD
 
 #### Development Environment
+
 ```json
 {
   "scripts": {
@@ -287,6 +318,7 @@ class SelfHealingController {
 ```
 
 #### CI/CD Pipeline (GitHub Actions)
+
 ```yaml
 name: VisualGridDev CI/CD
 on: [push, pull_request]
@@ -322,6 +354,7 @@ jobs:
 ## Performance & Scalability Targets
 
 ### Performance Metrics
+
 - **Flow Execution Latency**: < 10ms for simple nodes
 - **Mesh Discovery Time**: < 5 seconds for new nodes
 - **UI Responsiveness**: < 100ms for user interactions
@@ -329,6 +362,7 @@ jobs:
 - **Concurrent Flows**: > 1,000 flows per runtime instance
 
 ### Scalability Targets
+
 - **Horizontal Scaling**: 1,000+ nodes in mesh network
 - **Vertical Scaling**: Support for 32+ CPU cores per node
 - **Edge Deployment**: Run on Raspberry Pi 4 (4GB RAM)

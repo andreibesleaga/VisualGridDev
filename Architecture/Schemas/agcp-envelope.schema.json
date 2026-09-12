@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/andreibesleaga/VisualGridDev/Architecture/Schemas/agcp-envelope.schema.json",
+  "title": "AGCP Message Envelope",
+  "description": "Draft envelope for the Agentic Grid Communication Protocol. Derived from the prose schema in Architecture/Extensive/AGCP_PROTOCOL_SCHEMAS.md with the deltas recorded in Architecture/Schemas/README.md. Non-normative until frozen.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "timestamp",
+    "from",
+    "to",
+    "type",
+    "correlationId",
+    "data"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Version-4 UUID, unique per logical message and stable across retries (CON-CORE-002)."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the AGCP revision the sender implements (CON-CORE-003). Do not use a literal."
+    },
+    "timestamp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Unix epoch seconds at which the message was created."
+    },
+    "from": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier of the source node. Must not be a personal identifier."
+    },
+    "to": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ],
+      "description": "Destination node or nodes."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "request",
+        "response",
+        "event",
+        "command",
+        "notification",
+        "heartbeat",
+        "error"
+      ],
+      "description": "Message kind. 'error' is added relative to the prose schema so that CON-CORE-012 has a typed carrier."
+    },
+    "correlationId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Correlation identifier preserved across every bridge translation (CON-CORE-005)."
+    },
+    "signature": {
+      "type": "string",
+      "description": "Message-level signature over the canonical serialisation. Authentication itself belongs to the transport (CON-CORE-009); credentials must not appear here (CON-CORE-011)."
+    },
+    "encoding": {
+      "type": "string",
+      "enum": [
+        "json",
+        "protobuf"
+      ],
+      "default": "protobuf",
+      "description": "Serialisation of the data field. 'binary' is intentionally not permitted; see README alignment delta 2."
+    },
+    "maxPayloadBytes": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Declared maximum payload size for this message class, enforced at the receiver (CON-CORE-013)."
+    },
+    "ttlSeconds": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Optional lifetime after which the message must be discarded rather than delivered."
+    },
+    "context": {
+      "type": "object",
+      "description": "Optional non-identifying metadata such as tenant, region, or protocol revision of the originating bridge.",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      }
+    },
+    "data": {
+      "description": "Message payload. Shape is determined by the type field and the bridge that produced it.",
+      "type": [
+        "object",
+        "array",
+        "string",
+        "number",
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "$comment": "SPDX-FileCopyrightText: 2025-2026 Andrei Nicolae Besleaga. SPDX-License-Identifier: Apache-2.0. "
+}

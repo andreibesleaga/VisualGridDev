@@ -1,5 +1,12 @@
 # VisualGridDev v5.0 - PlantUML Diagrams
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 This document contains PlantUML source for all required architecture diagrams: C4 (all levels), arc42, system, context, state, sequence, runtime, security, and deployment. Each diagram is referenced in the main documentation and can be rendered for visual clarity.
 
 ---
@@ -183,5 +190,3 @@ Mon -> IDE : Update Dashboard
 ```
 
 ---
-
-# End of PlantUML Diagrams

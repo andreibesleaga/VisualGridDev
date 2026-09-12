@@ -1,10 +1,19 @@
 # 2. Architecture Overview
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 ## System Context
+
 - **Actors**: Developers, Admins, IoT Devices, Cloud Platforms
 - **Systems**: VisualGridDev Studio, Mesh Grid, AI/ML Pipelines, Event Streaming Backbone
 
 ## Architecture Principles
+
 - MAPE-K feedback loops
 - Decentralized, protocol-agnostic messaging
 - Visual-first development

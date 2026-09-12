@@ -1,5 +1,12 @@
 # 5. Logical Architecture (C4 Level 2)
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 - VisualGridDev Studio (IDE)
 - Flow Runtime (Node-RED)
 - A2A/MCP/ANP/ACP Protocol Router

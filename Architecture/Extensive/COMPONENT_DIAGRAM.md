@@ -1,8 +1,15 @@
 # VisualGridDev Studio Component Interaction Diagram
 
+> **Status: draft specification - not implemented and not validated.**
+> This document proposes a design. No component described here has been built,
+> deployed, or tested, and any figure quoted is a target rather than a
+> measurement. Claims of "production ready" or "complete" inherited from earlier
+> drafts are unsupported and are being retired.
+> See [PROJECT_STATUS.md](../../PROJECT_STATUS.md) for the maturity boundary and known gaps.
+
 ## System Overview Flow
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                            VisualGridDev Studio IDE (Web UI)                    │
 │  ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐│
@@ -83,39 +90,45 @@
 ## Message Flow Examples
 
 ### 1. Flow Execution Message Flow
-```
+
+```text
 User (IDE) → Flow Config → Core Runtime → Node Registry → Specific Node → Execute
                                       ↓
                               Event Bus → Other Nodes → Response → User (Monitor)
 ```
 
 ### 2. Self-Healing Trigger Flow
-```
+
+```text
 Node Failure → Health Monitor → Analyze → Plan Recovery → Execute Failover
                             ↓
                     Fitness Evaluator → Update Metrics → Trigger Evolution
 ```
 
 ### 3. AI/ML Inference Flow (via MCP)
-```
+
+```text
 Data Input → Flow Engine → MCP Client Node → External LLM Service → Model Inference
                                    ↓
                            SQLite-AI Cache → Response → Flow Output
 ```
 
 ### 4. External System Integration Flow
-```
+
+```text
 Flow Trigger → MCP Client → External System (DB/File/Git/API) → MCP Response → Flow Continue
 ```
 
 ### 5. Universal External Communication Pattern
-```
+
+```text
 VisualGridDev Flow → MCP Client Manager → MCP Server (Any System) → System Response → Flow Result
 ```
 
 ## Inter-Component Communication Protocols
 
 ### Protocol Matrix
+
 | Source Component | Target Component | Protocol | Purpose |
 |------------------|------------------|----------|---------|
 | IDE | Core Runtime | WebSocket | Real-time updates |
@@ -133,21 +146,25 @@ VisualGridDev Flow → MCP Client Manager → MCP Server (Any System) → System
 ## Data Flow Patterns
 
 ### 1. Event-Driven Pattern
-```
+
+```text
 Sensor Data → Event Bus → Multiple Subscribers → Parallel Processing → Aggregation
 ```
 
 ### 2. Request-Response Pattern
-```
+
+```text
 User Request → API Gateway → Service → Database → Response → User
 ```
 
 ### 3. Stream Processing Pattern
-```
+
+```text
 Data Stream → Buffer → Transform → Filter → Enrich → Output Stream
 ```
 
 ### 4. Mesh Replication Pattern
-```
+
+```text
 Local Update → Raft Leader → Consensus → Replicate → All Nodes → Acknowledge
 ```

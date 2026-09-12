@@ -1,3 +1,14 @@
+NOTE ON SCOPE
+=============
+
+This file is the licence for the **prose and illustration** in this
+repository. It is NOT the licence for the normative artefacts - protocol
+schemas, conformance requirements, requirement statements, and diagram
+sources - which are licensed under the Apache License 2.0. See LICENSE-SPEC.md
+for the split, and LICENSE-APACHE for the Apache text.
+
+----------------------------------------------------------------------------
+
 ## License
 
 This documentation is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)]( https://creativecommons.org/licenses/by-nc-nd/4.0/).
