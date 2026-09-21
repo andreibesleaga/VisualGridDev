@@ -33,7 +33,7 @@ is the pin.
 | NIST Generative AI Profile | NIST AI 600-1, July 2024 | <https://doi.org/10.6028/NIST.AI.600-1> | — |
 | IEEE CertifAIEd | Programme based on the IEEE 7000 series | <https://standards.ieee.org/products-programs/icap/ieee-certifaied/> | Confirm the targeted programme revision; the mapping in this repository does not claim certification. |
 | SOC 2 | AICPA Trust Services Criteria (2017), with the 2022 revised points of focus | <https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2> | SOC 2 is an attestation outcome, not a specification one can comply with unilaterally. |
-| ISO/IEC 27001:2022 | ISO/IEC 27001:2022 | <https://www.iso.org/isoiec-27001-information-security.html> | Supersedes the 2013 edition. |
+| ISO/IEC 27001:2022 | ISO/IEC 27001:2022 | <https://www.iso.org/standard/82875.html> | Supersedes the 2013 edition. |
 
 ## Engineering standards and methods
 
@@ -45,7 +45,7 @@ is the pin.
 | arc42 | Template version 8 | <https://arc42.org/> | Verify the current template version when regenerating the arc42 section. |
 | PlantUML | Living language | <https://plantuml.com/> | Diagrams are validated by rendering, not by version pin. |
 | OpenTelemetry | Living specification | <https://opentelemetry.io/docs/specs/> | Pin the SDK version at implementation time. |
-| OWASP ASVS | 5.0 (May 2025) | <https://owasp.org/www-project-application-security-verification-standard/> | Applies only once an implementation exists. |
+| OWASP ASVS | 5.0 (May 2025) | <https://github.com/OWASP/ASVS/releases/download/v5.0.0_release/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf> | Official OWASP release asset for the pinned 5.0.0 publication. Applies only once an implementation exists. |
 | SLSA | v1.1 | <https://slsa.dev/spec/v1.1/> | Build-integrity levels. |
 | CycloneDX | 1.6 | <https://cyclonedx.org/specification/overview/> | SBOM format. |
 | SPDX licence list | Living | <https://spdx.org/licenses/> | Used for licence identifiers. |

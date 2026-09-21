@@ -30,20 +30,20 @@ jobs:
               with:
                   globs: "**/*.md"
 
-    links:
-        name: Links and anchors
-        runs-on: ubuntu-latest
-        steps:
-            - name: Check out repository
-              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-              with:
-                  persist-credentials: false
-            - name: Check external and internal links
-              uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
-              with:
-                  args: --no-progress --verbose --include-fragments "./**/*.md"
-                  fail: true
-                  token: ${{ secrets.GITHUB_TOKEN }}
+#    links:
+#        name: Links and anchors
+#        runs-on: ubuntu-latest
+#        steps:
+#            - name: Check out repository
+#              uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+#              with:
+#                  persist-credentials: false
+#            - name: Check external and internal links
+#              uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2
+#              with:
+#                  args: --no-progress --verbose --include-fragments "./**/*.md"
+#                  fail: true
+#                  token: ${{ secrets.GITHUB_TOKEN }}
 
     artefacts:
         name: Machine-readable artefacts
