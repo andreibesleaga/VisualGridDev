@@ -33,7 +33,7 @@ is the pin.
 | NIST Generative AI Profile | NIST AI 600-1, July 2024 | <https://doi.org/10.6028/NIST.AI.600-1> | — |
 | IEEE CertifAIEd | Programme based on the IEEE 7000 series | <https://standards.ieee.org/products-programs/icap/ieee-certifaied/> | Confirm the targeted programme revision; the mapping in this repository does not claim certification. |
 | SOC 2 | AICPA Trust Services Criteria (2017), with the 2022 revised points of focus | <https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2> | SOC 2 is an attestation outcome, not a specification one can comply with unilaterally. |
-| ISO/IEC 27001:2022 | ISO/IEC 27001:2022 | <https://www.iso.org/standard/27001.html> | Supersedes the 2013 edition. |
+| ISO/IEC 27001:2022 | ISO/IEC 27001:2022 | <https://www.iso.org/standard/82875.html> | Supersedes the 2013 edition. |
 
 ## Engineering standards and methods
 
