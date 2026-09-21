@@ -45,7 +45,7 @@ is the pin.
 | arc42 | Template version 8 | <https://arc42.org/> | Verify the current template version when regenerating the arc42 section. |
 | PlantUML | Living language | <https://plantuml.com/> | Diagrams are validated by rendering, not by version pin. |
 | OpenTelemetry | Living specification | <https://opentelemetry.io/docs/specs/> | Pin the SDK version at implementation time. |
-| OWASP ASVS | 5.0 (May 2025) | <https://raw.githubusercontent.com/OWASP/ASVS/5cf9b032440be53ce345ab3c130fda46ba1ce7a2/5.0/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf> | Official OWASP repository PDF for the pinned 5.0.0 release. Applies only once an implementation exists. |
+| OWASP ASVS | 5.0 (May 2025) | <https://github.com/OWASP/ASVS/releases/download/v5.0.0_release/OWASP_Application_Security_Verification_Standard_5.0.0_en.pdf> | Official OWASP release asset for the pinned 5.0.0 publication. Applies only once an implementation exists. |
 | SLSA | v1.1 | <https://slsa.dev/spec/v1.1/> | Build-integrity levels. |
 | CycloneDX | 1.6 | <https://cyclonedx.org/specification/overview/> | SBOM format. |
 | SPDX licence list | Living | <https://spdx.org/licenses/> | Used for licence identifiers. |
